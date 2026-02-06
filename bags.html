@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TSTN4463QN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-TSTN4463QN');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>手作皮包系列 | Royal Tech 皇家工藝</title>
+    
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 針對 bags.html 的專屬樣式 --- */
-        body { padding-top: 80px; } /* 避開導航列 */
+        /* --- 針對 bags.html 的專屬排版樣式 --- */
+        body { padding-top: 80px; } /* 避開固定導航列 */
 
         .layout-container {
             display: flex;
@@ -22,8 +33,7 @@
 
         /* 左邊：產品清單 (Sidebar) */
         .sidebar {
-            flex: 0 0 250px;
-            border-right: 1px solid #ddd;
+            flex: 0 0 250px; /* 固定寬度 */
             padding-right: 20px;
         }
         
@@ -42,21 +52,23 @@
         .product-btn {
             background: none;
             border: none;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #666;
             cursor: pointer;
             text-align: left;
             width: 100%;
-            padding: 10px;
+            padding: 12px 15px;
             border-radius: 5px;
             transition: 0.3s;
             font-family: 'Noto Sans TC', sans-serif;
+            border-left: 3px solid transparent;
         }
 
         .product-btn:hover, .product-btn.active {
             background-color: #F5F1EA;
             color: #8B5E3C;
             font-weight: bold;
+            border-left: 3px solid #8B5E3C;
         }
 
         /* 右邊：產品展示區 */
@@ -67,72 +79,114 @@
         /* 隱藏所有產品，只顯示 active 的那個 */
         .product-detail {
             display: none;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.5s ease-out;
         }
         .product-detail.active {
             display: block;
         }
 
-        /* 右上：主圖與說明 (兩欄式) */
+        /* ★關鍵修正區：右上主圖與說明 (兩欄式) */
         .product-top {
             display: flex;
-            gap: 30px;
-            margin-bottom: 40px;
+            gap: 40px;
+            margin-bottom: 50px;
+            align-items: flex-start; /* ★讓圖片與文字頂部對齊，消除下方留白 */
         }
 
         .main-image-container {
-            flex: 1;
-            overflow: hidden;
+            flex: 1.2; /* 圖片區塊佔比大一點 */
             border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            position: sticky; /* ★特效：讓圖片捲動時黏在畫面上 */
+            top: 100px;       /* 黏貼位置 */
+            background-color: #fff;
         }
 
         .main-image {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.3s;
+            transition: opacity 0.3s;
         }
 
         .product-desc {
-            flex: 1;
+            flex: 1; /* 文字區塊 */
         }
 
         .product-desc h2 {
             font-size: 2rem;
             margin-bottom: 10px;
+            line-height: 1.3;
         }
 
         .price {
             font-size: 1.5rem;
             color: #C84630;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: block;
+            font-family: 'Noto Serif TC', serif;
         }
 
         .desc-text {
             color: #555;
             line-height: 1.8;
             margin-bottom: 30px;
+            font-size: 1rem;
+            text-align: justify;
+        }
+
+        .spec-list {
+            margin-bottom: 30px;
+            list-style: none;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 8px;
+        }
+
+        .spec-list li {
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .spec-list li i {
+            color: #8B5E3C;
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
         }
 
         .btn-order {
             display: inline-block;
             background-color: #8B5E3C;
             color: white;
-            padding: 12px 30px;
+            padding: 15px 40px;
             border-radius: 50px;
             font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(139, 94, 60, 0.3);
         }
-        .btn-order:hover { background-color: #5D4037; }
+        .btn-order:hover { 
+            background-color: #5D4037; 
+            transform: translateY(-2px);
+        }
 
         /* 右下：縮圖畫廊 (Gallery) */
+        .gallery-section {
+            margin-top: 20px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
         .gallery-title {
             font-size: 1.2rem;
-            margin-bottom: 15px;
-            border-left: 4px solid #8B5E3C;
-            padding-left: 10px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
         }
 
         .gallery-grid {
@@ -145,9 +199,9 @@
             width: 100%;
             aspect-ratio: 1/1;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            opacity: 0.6;
+            opacity: 0.5;
             transition: 0.3s;
             border: 2px solid transparent;
         }
@@ -155,17 +209,47 @@
         .thumb:hover, .thumb.active {
             opacity: 1;
             border-color: #8B5E3C;
+            transform: scale(1.05);
         }
 
         /* RWD 手機版調整 */
         @media (max-width: 768px) {
-            .layout-container { flex-direction: column; }
-            .sidebar { border-right: none; border-bottom: 1px solid #ddd; padding-bottom: 20px; }
-            .product-top { flex-direction: column; }
+            .layout-container { flex-direction: column; padding: 20px; }
+            .sidebar { 
+                flex: none; 
+                width: 100%;
+                border-right: none; 
+                border-bottom: 1px solid #ddd; 
+                padding-bottom: 20px; 
+                margin-bottom: 20px;
+            }
+            .sidebar h3 { display: none; } 
+            
+            .product-list {
+                display: flex;
+                overflow-x: auto;
+                gap: 10px;
+                padding-bottom: 5px;
+            }
+            .product-btn {
+                white-space: nowrap;
+                width: auto;
+                background-color: #f0f0f0;
+                border-left: none;
+            }
+            .product-btn.active {
+                background-color: #8B5E3C;
+                color: #fff;
+                border-left: none;
+            }
+
+            .product-top { flex-direction: column; gap: 20px; }
+            .main-image-container { position: static; } /* 手機版取消 Sticky */
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -187,11 +271,11 @@
     <div class="layout-container">
         
         <aside class="sidebar">
-            <h3>包款系列</h3>
+            <h3>作品列表</h3>
             <ul class="product-list">
                 <li><button class="product-btn active" onclick="showProduct('bag1')">牛角可頌包 (黑)</button></li>
                 <li><button class="product-btn" onclick="showProduct('bag2')">經典托特包 (棕)</button></li>
-                <li><button class="product-btn" onclick="showProduct('bag3')">劍橋公事包</button></li>
+                <li><button class="product-btn" onclick="showProduct('bag3')">英倫劍橋公事包</button></li>
             </ul>
         </aside>
 
@@ -202,39 +286,51 @@
                     <div class="main-image-container">
                         <img id="main-img-1" src="images/bags/bag-croissant-black.jpg" alt="黑色牛角包" class="main-image">
                     </div>
+                    
                     <div class="product-desc">
                         <h2>職人手作牛角可頌包</h2>
                         <span class="price">NT$ 另洽</span>
+                        
                         <p class="desc-text">
-                            這款牛角包採用義大利頂級植鞣革製作，經過多次手工揉製，呈現出自然且獨特的皺褶紋理。
+                            這款牛角包採用義大利頂級植鞣革製作，經過多次手工揉製，呈現出自然且獨特的皺褶紋理，宛如剛出爐的可頌般充滿層次感。
                             <br><br>
                             包身柔軟卻不失挺度，黑色皮革在光線下散發低調奢華的光澤。拉鍊處特別設計了皮革繩結，方便開合且增添細節美感。
                         </p>
-                        <ul style="margin-bottom: 20px; list-style: disc; padding-left: 20px; color: #666;">
-                            <li>材質：義大利植鞣牛皮</li>
-                            <li>顏色：極致黑</li>
-                            <li>工藝：手工雙針縫製 / 邊緣磨光</li>
+                        
+                        <ul class="spec-list">
+                            <li><i class="fa-solid fa-layer-group"></i> 材質：義大利植鞣牛皮</li>
+                            <li><i class="fa-solid fa-palette"></i> 顏色：極致黑 (可客製其他顏色)</li>
+                            <li><i class="fa-solid fa-screwdriver-wrench"></i> 工藝：傳統雙針手縫 / 邊緣磨光</li>
+                            <li><i class="fa-solid fa-ruler-combined"></i> 尺寸：可放入長夾與手機</li>
                         </ul>
-                        <a href="index.html#contact" class="btn-order">詢問訂製</a>
+
+                        <a href="tel:0987927250" class="btn-order">
+                            <i class="fa-solid fa-phone"></i> 詢問訂製
+                        </a>
+
+                        <div class="gallery-section">
+                            <h4 class="gallery-title">細節鑑賞</h4>
+                            <div class="gallery-grid">
+                                <img src="images/bags/bag-croissant-black.jpg" class="thumb active" onclick="changeImage('bag1', this)">
+                                <img src="images/bags/bag-croissant-black-detail.jpg" class="thumb" onclick="changeImage('bag1', this)">
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <h4 class="gallery-title">細節鑑賞</h4>
-                <div class="gallery-grid">
-                    <img src="images/bags/bag-croissant-black.jpg" class="thumb active" onclick="changeImage('bag1', this)">
-                    <img src="images/bags/bag-croissant-black-detail.jpg" class="thumb" onclick="changeImage('bag1', this)">
-                    </div>
             </div>
 
             <div id="bag2" class="product-detail">
                 <div class="product-top">
                     <div class="main-image-container">
-                        <div style="width:100%; height:400px; background:#ddd; display:flex; justify-content:center; align-items:center;">托特包照片待補</div>
+                        <div style="width:100%; height:400px; background:#f0f0f0; display:flex; justify-content:center; align-items:center; color:#999;">
+                            托特包照片待補
+                        </div>
                     </div>
                     <div class="product-desc">
                         <h2>經典植鞣托特包</h2>
-                        <p class="desc-text">這是一款適合日常通勤的大容量托特包...</p>
-                        <a href="index.html#contact" class="btn-order">詢問訂製</a>
+                        <span class="price">NT$ 另洽</span>
+                        <p class="desc-text">這是一款適合日常通勤的大容量托特包，簡約俐落的線條設計，無論是上班或休閒皆能完美搭配。</p>
+                        <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
                     </div>
                 </div>
             </div>
@@ -242,12 +338,15 @@
             <div id="bag3" class="product-detail">
                 <div class="product-top">
                     <div class="main-image-container">
-                        <div style="width:100%; height:400px; background:#ddd; display:flex; justify-content:center; align-items:center;">公事包照片待補</div>
+                        <div style="width:100%; height:400px; background:#f0f0f0; display:flex; justify-content:center; align-items:center; color:#999;">
+                            公事包照片待補
+                        </div>
                     </div>
                     <div class="product-desc">
                         <h2>英倫劍橋公事包</h2>
-                        <p class="desc-text">硬挺的結構設計，展現專業形象...</p>
-                        <a href="index.html#contact" class="btn-order">詢問訂製</a>
+                        <span class="price">NT$ 另洽</span>
+                        <p class="desc-text">硬挺的結構設計，展現專業形象。內層設有筆電隔層與多個收納袋，實用與美感兼具。</p>
+                        <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
                     </div>
                 </div>
             </div>
@@ -255,10 +354,22 @@
         </main>
     </div>
 
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">Royal Tech.</div>
+            <div class="footer-info">
+                <p>皇家生活科技有限公司</p>
+                <p>臺南市佳里區安西里文化西路430號</p>
+                <p>電話：0987-927-250</p>
+            </div>
+            <p class="copyright">&copy; 2026 皇家生活科技有限公司 All Rights Reserved.</p>
+        </div>
+    </footer>
+
     <script>
         // 1. 切換產品 (左邊選單)
         function showProduct(productId) {
-            // 隱藏所有產品
+            // 隱藏所有產品內容
             document.querySelectorAll('.product-detail').forEach(div => {
                 div.classList.remove('active');
             });
@@ -267,20 +378,31 @@
                 btn.classList.remove('active');
             });
 
-            // 顯示被點選的產品
+            // 顯示被點選的產品內容
             document.getElementById(productId).classList.add('active');
-            // 讓被點選的按鈕變色 (這裡需要透過 event target 抓取，簡單寫法先略過按鈕變色細節，或者用 onclick 傳入 this)
-            event.target.classList.add('active');
+            
+            // 讓被點選的按鈕變色
+            event.currentTarget.classList.add('active');
+
+            // 切換產品時，畫面滾動回頂部 (優化手機體驗)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // 2. 切換圖片 (右下縮圖)
         function changeImage(productId, thumbElement) {
             // 找到該產品區域的主圖
             const mainImg = document.querySelector(`#${productId} .main-image`);
-            // 把主圖的 src 換成縮圖的 src
-            mainImg.src = thumbElement.src;
+            
+            // 淡出效果 (Optional)
+            mainImg.style.opacity = 0;
+            
+            setTimeout(() => {
+                // 把主圖的 src 換成縮圖的 src
+                mainImg.src = thumbElement.src;
+                mainImg.style.opacity = 1;
+            }, 200);
 
-            // 處理縮圖的框框樣式
+            // 處理縮圖的框框樣式 (Active)
             document.querySelectorAll(`#${productId} .thumb`).forEach(img => {
                 img.classList.remove('active');
             });
