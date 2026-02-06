@@ -1,12 +1,12 @@
 /* --- 變數設定 (配色方案) --- */
 :root {
-    --bg-color: #FDFBF7;        /* 米白 (紙張質感) */
-    --primary-color: #8B5E3C;   /* 皮革棕 (主文字) */
-    --secondary-color: #5D4037; /* 深咖啡 (標題) */
-    --accent-color: #C84630;    /* 朱砂紅 (強調/按鈕 - 代表宮廟文化) */
+    --bg-color: #FDFBF7;        /* 米白 */
+    --primary-color: #8B5E3C;   /* 皮革棕 */
+    --secondary-color: #5D4037; /* 深咖啡 */
+    --accent-color: #C84630;    /* 朱砂紅 */
     --text-light: #888888;
-    --font-serif: 'Noto Serif TC', 'Playfair Display', serif; /* 標題字體 */
-    --font-sans: 'Noto Sans TC', sans-serif;                /* 內文字體 */
+    --font-serif: 'Noto Serif TC', 'Playfair Display', serif;
+    --font-sans: 'Noto Sans TC', sans-serif;
 }
 
 /* --- 全域設定 --- */
@@ -17,7 +17,7 @@
 }
 
 html {
-    scroll-behavior: smooth; /* 點擊連結時平滑滾動 */
+    scroll-behavior: smooth;
 }
 
 body {
@@ -129,14 +129,18 @@ header {
     transition: all 0.3s ease;
 }
 
-/* --- 主視覺 (Hero) --- */
+/* --- 主視覺 (Hero) - ★這裡設定背景圖片★ --- */
 .hero {
     height: 100vh;
-    background-color: #e0dcd5;
-    /* 這裡使用 Unsplash 的皮革質感圖當範例，可換成自己的 */
-    background-image: url('https://images.unsplash.com/photo-1550503903-8b776269299e?q=80&w=1920&auto=format&fit=crop'); 
-    background-size: cover;
-    background-position: center;
+    background-color: #555; /* 圖片跑出來前的預備色 */
+    
+    /* 設定背景圖片路徑 */
+    background-image: url('images/hero-bg.jpg'); 
+    
+    background-size: cover;       /* 讓圖片填滿整個畫面 */
+    background-position: center;  /* 圖片置中 */
+    background-attachment: fixed; /* 視差滾動效果 (讓背景固定) */
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -150,7 +154,8 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.35); /* 遮罩讓文字更清楚 */
+    /* 黑色半透明遮罩，讓白字更清楚 (0.4 代表 40% 黑) */
+    background: rgba(0, 0, 0, 0.4); 
 }
 
 .hero-content {
@@ -161,19 +166,7 @@ header {
 }
 
 .hero-content h1 {
-    font-size: 3.5rem;
-    margin-bottom: 15px;
-    color: #fff;
-    letter-spacing: 3px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-    font-weight: 300;
-    letter-spacing: 2px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    color: #fff; /* 強制標題為白色 */
 }
 
 .btn-main {
@@ -184,6 +177,7 @@ header {
     font-size: 1rem;
     letter-spacing: 1px;
     transition: 0.3s;
+    display: inline-block;
 }
 
 .btn-main:hover {
@@ -245,7 +239,7 @@ header {
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 40px;
 }
 
@@ -260,22 +254,24 @@ header {
     margin-bottom: 20px;
     position: relative;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    aspect-ratio: 1/1; /* 確保圖片是正方形 */
 }
 
 .img-placeholder-product {
     width: 100%;
-    height: 300px;
+    height: 100%;
     background-color: #ddd;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #fff;
-    font-size: 0.9rem;
+    font-size: 1rem;
     transition: transform 0.6s ease;
 }
 
-.product-card:hover .img-placeholder-product {
-    transform: scale(1.08); /* 圖片微放大特效 */
+.product-card:hover .img-placeholder-product,
+.product-card:hover img {
+    transform: scale(1.08); 
 }
 
 .product-info h3 {
@@ -394,7 +390,9 @@ footer {
     .burger { display: block; }
     .nav-active { transform: translateX(0%); }
 
-    .hero-content h1 { font-size: 2.2rem; }
+    /* 首頁標題手機版縮小一點，避免換行太醜 */
+    .hero-content h1 { font-size: 2.8rem !important; }
+    
     .about-grid { grid-template-columns: 1fr; }
     .img-placeholder { height: 300px; }
     
