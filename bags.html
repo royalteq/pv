@@ -19,8 +19,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 針對 bags.html 的專屬排版樣式 --- */
-        body { padding-top: 80px; } /* 避開固定導航列 */
+        /* --- bags.html 專屬樣式 --- */
+        body { padding-top: 80px; } 
 
         .layout-container {
             display: flex;
@@ -33,7 +33,7 @@
 
         /* 左邊：產品清單 (Sidebar) */
         .sidebar {
-            flex: 0 0 250px; /* 固定寬度 */
+            flex: 0 0 250px; 
             padding-right: 20px;
         }
         
@@ -45,9 +45,7 @@
             border-bottom: 2px solid #C84630;
         }
 
-        .product-list li {
-            margin-bottom: 15px;
-        }
+        .product-list li { margin-bottom: 15px; }
 
         .product-btn {
             background: none;
@@ -72,33 +70,28 @@
         }
 
         /* 右邊：產品展示區 */
-        .main-content {
-            flex: 1;
-        }
+        .main-content { flex: 1; }
 
-        /* 隱藏所有產品，只顯示 active 的那個 */
         .product-detail {
             display: none;
             animation: fadeIn 0.5s ease-out;
         }
-        .product-detail.active {
-            display: block;
-        }
+        .product-detail.active { display: block; }
 
-        /* 右上：主圖與說明 (兩欄式) */
+        /* 右上：主圖與說明 */
         .product-top {
             display: flex;
             gap: 40px;
             margin-bottom: 50px;
-            align-items: flex-start; /* 讓圖片與文字頂部對齊 */
+            align-items: flex-start; 
         }
 
         .main-image-container {
-            flex: 1.2; /* 圖片區塊佔比大一點 */
+            flex: 1.2; 
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            position: sticky; /* 圖片隨捲軸移動特效 */
+            position: sticky; 
             top: 100px;       
             background-color: #fff;
         }
@@ -110,9 +103,7 @@
             transition: opacity 0.3s;
         }
 
-        .product-desc {
-            flex: 1; /* 文字區塊 */
-        }
+        .product-desc { flex: 1; }
 
         .product-desc h2 {
             font-size: 2rem;
@@ -175,7 +166,7 @@
             transform: translateY(-2px);
         }
 
-        /* 右下：縮圖畫廊 (Gallery) */
+        /* 畫廊樣式 */
         .gallery-section {
             margin-top: 20px;
             padding-top: 30px;
@@ -191,7 +182,7 @@
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             gap: 15px;
         }
 
@@ -216,26 +207,27 @@
         @media (max-width: 768px) {
             .layout-container { flex-direction: column; padding: 20px; }
             .sidebar { 
-                flex: none; 
                 width: 100%;
                 border-right: none; 
                 border-bottom: 1px solid #ddd; 
-                padding-bottom: 20px; 
+                padding-bottom: 10px; 
                 margin-bottom: 20px;
             }
             .sidebar h3 { display: none; } 
             
+            /* 手機版橫向滑動選單 */
             .product-list {
                 display: flex;
                 overflow-x: auto;
                 gap: 10px;
-                padding-bottom: 5px;
+                padding-bottom: 10px;
             }
             .product-btn {
                 white-space: nowrap;
                 width: auto;
                 background-color: #f0f0f0;
                 border-left: none;
+                padding: 10px 20px;
             }
             .product-btn.active {
                 background-color: #8B5E3C;
@@ -273,9 +265,13 @@
         <aside class="sidebar">
             <h3>作品列表</h3>
             <ul class="product-list">
-                <li><button class="product-btn active" onclick="showProduct('bag1')">牛角可頌包 (黑)</button></li>
+                <li><button class="product-btn active" onclick="showProduct('bag1')">牛角可頌包</button></li>
                 <li><button class="product-btn" onclick="showProduct('bag2')">經典方扣肩背包</button></li>
-                <li><button class="product-btn" onclick="showProduct('bag3')">英倫劍橋公事包</button></li>
+                <li><button class="product-btn" onclick="showProduct('bag3')">復古焦糖手提包</button></li>
+                <li><button class="product-btn" onclick="showProduct('bag4')">霧藍手工編織包</button></li>
+                <li><button class="product-btn" onclick="showProduct('bag5')">復古口金醫生包</button></li>
+                <li><button class="product-btn" onclick="showProduct('bag6')">鱷魚紋鎖扣手提包</button></li>
+                <li><button class="product-btn" onclick="showProduct('bag7')">休閒真皮單肩胸包</button></li>
             </ul>
         </aside>
 
@@ -284,21 +280,15 @@
             <div id="bag1" class="product-detail active">
                 <div class="product-top">
                     <div class="main-image-container">
-                        <img id="main-img-1" src="images/bags/bag-croissant-black.jpg" alt="黑色牛角包" class="main-image">
+                        <img src="images/bags/bag-croissant-black.jpg" alt="黑色牛角包" class="main-image">
                     </div>
                     <div class="product-desc">
                         <h2>職人手作牛角可頌包</h2>
                         <span class="price">NT$ 另洽</span>
-                        <p class="desc-text">
-                            這款牛角包採用義大利頂級植鞣革製作，經過多次手工揉製，呈現出自然且獨特的皺褶紋理，宛如剛出爐的可頌般充滿層次感。
-                            <br><br>
-                            包身柔軟卻不失挺度，黑色皮革在光線下散發低調奢華的光澤。拉鍊處特別設計了皮革繩結，方便開合且增添細節美感。
-                        </p>
+                        <p class="desc-text">這款牛角包採用義大利頂級植鞣革製作，經過多次手工揉製，呈現出自然且獨特的皺褶紋理。拉鍊處特別設計了皮革繩結，方便開合且增添細節美感。</p>
                         <ul class="spec-list">
                             <li><i class="fa-solid fa-layer-group"></i> 材質：義大利植鞣牛皮</li>
                             <li><i class="fa-solid fa-palette"></i> 顏色：極致黑</li>
-                            <li><i class="fa-solid fa-screwdriver-wrench"></i> 工藝：傳統雙針手縫 / 邊緣磨光</li>
-                            <li><i class="fa-solid fa-ruler-combined"></i> 尺寸：可放入長夾與手機</li>
                         </ul>
                         <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
                         <div class="gallery-section">
@@ -316,30 +306,17 @@
             <div id="bag2" class="product-detail">
                 <div class="product-top">
                     <div class="main-image-container">
-                        <img id="main-img-2" src="images/bags/bag-classic-box.jpg" alt="經典方扣肩背包" class="main-image">
+                        <img src="images/bags/bag-classic-box.jpg" alt="經典方扣肩背包" class="main-image">
                     </div>
-                    
                     <div class="product-desc">
                         <h2>經典金釦復古方包</h2>
                         <span class="price">NT$ 另洽</span>
-                        
-                        <p class="desc-text">
-                            採用極簡的方正輪廓設計，搭配精緻的金色編織紋方扣，展現出優雅復古的氣質。
-                            <br><br>
-                            包身選用硬挺的光面植鞣革，邊緣飾以白色車線，勾勒出立體的結構感。翻蓋設計簡潔俐落，是日常穿搭與正式場合皆宜的經典單品。
-                        </p>
-                        
+                        <p class="desc-text">採用極簡的方正輪廓設計，搭配精緻的金色編織紋方扣。包身選用硬挺的光面植鞣革，邊緣飾以白色車線，勾勒出立體的結構感。</p>
                         <ul class="spec-list">
-                            <li><i class="fa-solid fa-layer-group"></i> 材質：光面植鞣革 (硬挺手感)</li>
+                            <li><i class="fa-solid fa-layer-group"></i> 材質：光面植鞣革</li>
                             <li><i class="fa-solid fa-palette"></i> 顏色：經典黑 / 白色車線</li>
-                            <li><i class="fa-solid fa-gem"></i> 五金：金色紋理方扣</li>
-                            <li><i class="fa-solid fa-ruler-combined"></i> 尺寸：適合隨身輕便出行</li>
                         </ul>
-
-                        <a href="tel:0987927250" class="btn-order">
-                            <i class="fa-solid fa-phone"></i> 詢問訂製
-                        </a>
-
+                        <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
                         <div class="gallery-section">
                             <h4 class="gallery-title">細節鑑賞</h4>
                             <div class="gallery-grid">
@@ -351,19 +328,150 @@
                     </div>
                 </div>
             </div>
-            
+
             <div id="bag3" class="product-detail">
                 <div class="product-top">
                     <div class="main-image-container">
-                        <div style="width:100%; height:400px; background:#f0f0f0; display:flex; justify-content:center; align-items:center; color:#999;">
-                            公事包照片待補
-                        </div>
+                        <img src="images/bags/bag-vintage-tan.jpg" alt="復古焦糖手提包" class="main-image">
                     </div>
                     <div class="product-desc">
-                        <h2>英倫劍橋公事包</h2>
+                        <h2>復古焦糖植鞣手提包</h2>
                         <span class="price">NT$ 另洽</span>
-                        <p class="desc-text">硬挺的結構設計，展現專業形象。內層設有筆電隔層與多個收納袋，實用與美感兼具。</p>
+                        <p class="desc-text">選用帶有自然紋理的焦糖色植鞣革，隨著使用時間會越用越亮。頂部的手提把經過加厚處理，握感扎實舒適。搭配經典的銀色旋轉鎖扣。</p>
+                        <ul class="spec-list">
+                            <li><i class="fa-solid fa-layer-group"></i> 材質：自然紋理植鞣革</li>
+                            <li><i class="fa-solid fa-palette"></i> 顏色：焦糖棕 (Tan)</li>
+                        </ul>
                         <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
+                        <div class="gallery-section">
+                            <h4 class="gallery-title">細節鑑賞</h4>
+                            <div class="gallery-grid">
+                                <img src="images/bags/bag-vintage-tan.jpg" class="thumb active" onclick="changeImage('bag3', this)">
+                                <img src="images/bags/bag-vintage-tan-02.jpg" class="thumb" onclick="changeImage('bag3', this)">
+                                <img src="images/bags/bag-vintage-tan-03.jpg" class="thumb" onclick="changeImage('bag3', this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bag4" class="product-detail">
+                <div class="product-top">
+                    <div class="main-image-container">
+                        <img src="images/bags/bag-woven-blue.jpg" alt="霧藍手工編織包" class="main-image">
+                    </div>
+                    <div class="product-desc">
+                        <h2>霧藍手工編織皮革包</h2>
+                        <span class="price">NT$ 另洽</span>
+                        <p class="desc-text">展現極致工藝的編織包款。每一條皮革都經過精密裁切，由職人手工交錯編織而成。選用低飽和度的霧藍色，優雅且耐看。</p>
+                        <ul class="spec-list">
+                            <li><i class="fa-solid fa-layer-group"></i> 材質：柔軟牛皮 (適合編織)</li>
+                            <li><i class="fa-solid fa-palette"></i> 顏色：莫蘭迪霧藍</li>
+                        </ul>
+                        <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
+                        <div class="gallery-section">
+                            <h4 class="gallery-title">細節鑑賞</h4>
+                            <div class="gallery-grid">
+                                <img src="images/bags/bag-woven-blue.jpg" class="thumb active" onclick="changeImage('bag4', this)">
+                                <img src="images/bags/bag-woven-blue-detail.jpg" class="thumb" onclick="changeImage('bag4', this)">
+                                <img src="images/bags/bag-woven-blue-top.jpg" class="thumb" onclick="changeImage('bag4', this)">
+                                <img src="images/bags/bag-woven-blue-zip.jpg" class="thumb" onclick="changeImage('bag4', this)">
+                                <img src="images/bags/bag-woven-blue-full.jpg" class="thumb" onclick="changeImage('bag4', this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bag5" class="product-detail">
+                <div class="product-top">
+                    <div class="main-image-container">
+                        <img src="images/bags/bag-doctor-tan.jpg" alt="復古口金醫生包" class="main-image">
+                    </div>
+                    <div class="product-desc">
+                        <h2>復古經典口金醫生包</h2>
+                        <span class="price">NT$ 另洽</span>
+                        <p class="desc-text">
+                            重現經典的醫生包版型，結構穩固且容量寬敞。皮革經過時間的洗禮呈現出迷人的琥珀色澤，表面保留了皮革原始的生長紋路。
+                            <br><br>
+                            最吸睛的是中央的銀色口金插鎖與加固皮帶設計，不僅安全防盜，更增添了濃厚的英倫復古情懷。頂部立體手把與白色車線細節，展現紮實的手工藝。
+                        </p>
+                        <ul class="spec-list">
+                            <li><i class="fa-solid fa-layer-group"></i> 材質：挺闊植鞣牛皮</li>
+                            <li><i class="fa-solid fa-lock"></i> 開合：復古口金插鎖 (Metal Clasp)</li>
+                            <li><i class="fa-solid fa-suitcase"></i> 風格：英倫復古 / 醫生包</li>
+                        </ul>
+                        <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
+                        <div class="gallery-section">
+                            <h4 class="gallery-title">細節鑑賞</h4>
+                            <div class="gallery-grid">
+                                <img src="images/bags/bag-doctor-tan.jpg" class="thumb active" onclick="changeImage('bag5', this)">
+                                <img src="images/bags/bag-doctor-tan-02.jpg" class="thumb" onclick="changeImage('bag5', this)">
+                                <img src="images/bags/bag-doctor-tan-03.jpg" class="thumb" onclick="changeImage('bag5', this)">
+                                <img src="images/bags/bag-doctor-tan-04.jpg" class="thumb" onclick="changeImage('bag5', this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bag6" class="product-detail">
+                <div class="product-top">
+                    <div class="main-image-container">
+                        <img src="images/bags/bag-croc-black.jpg" alt="鱷魚紋鎖扣手提包" class="main-image">
+                    </div>
+                    <div class="product-desc">
+                        <h2>奢華鱷魚紋鎖扣手提包</h2>
+                        <span class="price">NT$ 另洽</span>
+                        <p class="desc-text">
+                            氣場強大的手提包款。選用高品質的鱷魚壓紋皮革，紋路立體且帶有高級的光澤感。
+                            <br><br>
+                            設計靈感源自經典的柏金包風格，搭配銀色金屬旋鎖與皮帶束口，既保有了隱私性，又彰顯出不凡的品味。適合商務場合或正式宴會使用，展現自信與專業。
+                        </p>
+                        <ul class="spec-list">
+                            <li><i class="fa-solid fa-layer-group"></i> 材質：鱷魚壓紋牛皮 (Croc-Embossed)</li>
+                            <li><i class="fa-solid fa-palette"></i> 顏色：亮面黑 / 銀色五金</li>
+                            <li><i class="fa-solid fa-briefcase"></i> 款式：正式手提包 (附鎖扣)</li>
+                        </ul>
+                        <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
+                        <div class="gallery-section">
+                            <h4 class="gallery-title">細節鑑賞</h4>
+                            <div class="gallery-grid">
+                                <img src="images/bags/bag-croc-black.jpg" class="thumb active" onclick="changeImage('bag6', this)">
+                                <img src="images/bags/bag-croc-black-02.jpg" class="thumb" onclick="changeImage('bag6', this)">
+                                <img src="images/bags/bag-croc-black-side.jpg" class="thumb" onclick="changeImage('bag6', this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bag7" class="product-detail">
+                <div class="product-top">
+                    <div class="main-image-container">
+                        <img src="images/bags/bag-sling-brown.jpg" alt="休閒真皮單肩胸包" class="main-image">
+                    </div>
+                    <div class="product-desc">
+                        <h2>休閒真皮單肩胸包</h2>
+                        <span class="price">NT$ 另洽</span>
+                        <p class="desc-text">
+                            專為都會行動派設計的單肩胸包。選用柔軟厚實的深色皮革，觸感極佳且耐磨耐用。
+                            <br><br>
+                            流線型的包身貼合背部曲線，寬版織帶背帶能減輕肩膀負擔。前置拉鍊口袋設計，方便收納手機、鑰匙等隨身小物，白色車線為整體增添了一份粗獷與層次感。
+                        </p>
+                        <ul class="spec-list">
+                            <li><i class="fa-solid fa-layer-group"></i> 材質：厚實軟牛皮</li>
+                            <li><i class="fa-solid fa-person-biking"></i> 用途：日常休閒 / 騎車 / 旅行</li>
+                            <li><i class="fa-solid fa-maximize"></i> 特色：多隔層 / 寬版舒適背帶</li>
+                        </ul>
+                        <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
+                        <div class="gallery-section">
+                            <h4 class="gallery-title">細節鑑賞</h4>
+                            <div class="gallery-grid">
+                                <img src="images/bags/bag-sling-brown.jpg" class="thumb active" onclick="changeImage('bag7', this)">
+                                <img src="images/bags/bag-sling-brown-02.jpg" class="thumb" onclick="changeImage('bag7', this)">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -384,7 +492,6 @@
     </footer>
 
     <script>
-        // 1. 切換產品 (左邊選單)
         function showProduct(productId) {
             document.querySelectorAll('.product-detail').forEach(div => {
                 div.classList.remove('active');
@@ -398,13 +505,9 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 2. 切換圖片 (右下縮圖)
         function changeImage(productId, thumbElement) {
-            // 找到該產品區域的主圖 (注意這裡會找該 ID 下的 main-image)
             const mainImg = document.querySelector(`#${productId} .main-image`);
-            
             mainImg.style.opacity = 0;
-            
             setTimeout(() => {
                 mainImg.src = thumbElement.src;
                 mainImg.style.opacity = 1;
