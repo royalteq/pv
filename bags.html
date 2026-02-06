@@ -203,36 +203,49 @@
             transform: scale(1.05);
         }
 
-        /* RWD 手機版調整 */
+        /* ★ 手機版優化 (RWD) 修正區 ★ */
         @media (max-width: 768px) {
-            .layout-container { flex-direction: column; padding: 20px; }
+            .layout-container { 
+                flex-direction: column; 
+                padding: 15px 20px; /* 縮小上下內距 */
+                gap: 20px; /* ★關鍵修正：大幅縮小區塊間距 (原為40px) */
+            }
+            
             .sidebar { 
                 width: 100%;
                 border-right: none; 
-                border-bottom: 1px solid #ddd; 
-                padding-bottom: 10px; 
-                margin-bottom: 20px;
+                border-bottom: 1px solid #eee; 
+                padding-bottom: 15px; 
+                padding-right: 0;
+                margin-bottom: 0; /* ★關鍵修正：移除底部邊界 */
             }
             .sidebar h3 { display: none; } 
             
-            /* 手機版橫向滑動選單 */
+            /* ★關鍵修正：改為兩欄網格排列，一眼看清所有產品 */
             .product-list {
-                display: flex;
-                overflow-x: auto;
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* 兩欄 */
                 gap: 10px;
-                padding-bottom: 10px;
+                padding-bottom: 0;
+                overflow-x: visible; /* 取消滑動 */
             }
+            
             .product-btn {
-                white-space: nowrap;
-                width: auto;
-                background-color: #f0f0f0;
+                white-space: normal; /* 允許文字換行 */
+                text-align: center;
+                width: 100%;
+                background-color: #f8f8f8;
                 border-left: none;
-                padding: 10px 20px;
+                padding: 10px 5px;
+                font-size: 0.95rem;
+                border-radius: 8px;
             }
+            
             .product-btn.active {
                 background-color: #8B5E3C;
                 color: #fff;
                 border-left: none;
+                font-weight: 500;
             }
 
             .product-top { flex-direction: column; gap: 20px; }
@@ -391,14 +404,10 @@
                     <div class="product-desc">
                         <h2>復古經典口金醫生包</h2>
                         <span class="price">NT$ 另洽</span>
-                        <p class="desc-text">
-                            重現經典的醫生包版型，結構穩固且容量寬敞。皮革經過時間的洗禮呈現出迷人的琥珀色澤，表面保留了皮革原始的生長紋路。
-                            <br><br>
-                            最吸睛的是中央的銀色口金插鎖與加固皮帶設計，不僅安全防盜，更增添了濃厚的英倫復古情懷。頂部立體手把與白色車線細節，展現紮實的手工藝。
-                        </p>
+                        <p class="desc-text">重現經典的醫生包版型，結構穩固且容量寬敞。最吸睛的是中央的銀色口金插鎖與加固皮帶設計，不僅安全防盜，更增添了濃厚的英倫復古情懷。</p>
                         <ul class="spec-list">
                             <li><i class="fa-solid fa-layer-group"></i> 材質：挺闊植鞣牛皮</li>
-                            <li><i class="fa-solid fa-lock"></i> 開合：復古口金插鎖 (Metal Clasp)</li>
+                            <li><i class="fa-solid fa-lock"></i> 開合：復古口金插鎖</li>
                             <li><i class="fa-solid fa-suitcase"></i> 風格：英倫復古 / 醫生包</li>
                         </ul>
                         <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
@@ -423,15 +432,11 @@
                     <div class="product-desc">
                         <h2>奢華鱷魚紋鎖扣手提包</h2>
                         <span class="price">NT$ 另洽</span>
-                        <p class="desc-text">
-                            氣場強大的手提包款。選用高品質的鱷魚壓紋皮革，紋路立體且帶有高級的光澤感。
-                            <br><br>
-                            設計靈感源自經典的柏金包風格，搭配銀色金屬旋鎖與皮帶束口，既保有了隱私性，又彰顯出不凡的品味。適合商務場合或正式宴會使用，展現自信與專業。
-                        </p>
+                        <p class="desc-text">氣場強大的手提包款。選用高品質的鱷魚壓紋皮革，紋路立體且帶有高級的光澤感。設計靈感源自經典的柏金包風格，搭配銀色金屬旋鎖，彰顯不凡品味。</p>
                         <ul class="spec-list">
-                            <li><i class="fa-solid fa-layer-group"></i> 材質：鱷魚壓紋牛皮 (Croc-Embossed)</li>
+                            <li><i class="fa-solid fa-layer-group"></i> 材質：鱷魚壓紋牛皮</li>
                             <li><i class="fa-solid fa-palette"></i> 顏色：亮面黑 / 銀色五金</li>
-                            <li><i class="fa-solid fa-briefcase"></i> 款式：正式手提包 (附鎖扣)</li>
+                            <li><i class="fa-solid fa-briefcase"></i> 款式：正式手提包</li>
                         </ul>
                         <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
                         <div class="gallery-section">
@@ -454,15 +459,11 @@
                     <div class="product-desc">
                         <h2>休閒真皮單肩胸包</h2>
                         <span class="price">NT$ 另洽</span>
-                        <p class="desc-text">
-                            專為都會行動派設計的單肩胸包。選用柔軟厚實的深色皮革，觸感極佳且耐磨耐用。
-                            <br><br>
-                            流線型的包身貼合背部曲線，寬版織帶背帶能減輕肩膀負擔。前置拉鍊口袋設計，方便收納手機、鑰匙等隨身小物，白色車線為整體增添了一份粗獷與層次感。
-                        </p>
+                        <p class="desc-text">專為都會行動派設計的單肩胸包。選用柔軟厚實的深色皮革，觸感極佳且耐磨耐用。寬版織帶背帶能減輕肩膀負擔，適合日常休閒或騎車使用。</p>
                         <ul class="spec-list">
                             <li><i class="fa-solid fa-layer-group"></i> 材質：厚實軟牛皮</li>
-                            <li><i class="fa-solid fa-person-biking"></i> 用途：日常休閒 / 騎車 / 旅行</li>
-                            <li><i class="fa-solid fa-maximize"></i> 特色：多隔層 / 寬版舒適背帶</li>
+                            <li><i class="fa-solid fa-person-biking"></i> 用途：日常休閒 / 騎車</li>
+                            <li><i class="fa-solid fa-maximize"></i> 特色：多隔層 / 寬版背帶</li>
                         </ul>
                         <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
                         <div class="gallery-section">
