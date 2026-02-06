@@ -85,12 +85,12 @@
             display: block;
         }
 
-        /* ★關鍵修正區：右上主圖與說明 (兩欄式) */
+        /* 右上：主圖與說明 (兩欄式) */
         .product-top {
             display: flex;
             gap: 40px;
             margin-bottom: 50px;
-            align-items: flex-start; /* ★讓圖片與文字頂部對齊，消除下方留白 */
+            align-items: flex-start; /* 讓圖片與文字頂部對齊 */
         }
 
         .main-image-container {
@@ -98,8 +98,8 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            position: sticky; /* ★特效：讓圖片捲動時黏在畫面上 */
-            top: 100px;       /* 黏貼位置 */
+            position: sticky; /* 圖片隨捲軸移動特效 */
+            top: 100px;       
             background-color: #fff;
         }
 
@@ -244,7 +244,7 @@
             }
 
             .product-top { flex-direction: column; gap: 20px; }
-            .main-image-container { position: static; } /* 手機版取消 Sticky */
+            .main-image-container { position: static; } 
         }
 
         @keyframes fadeIn {
@@ -274,7 +274,7 @@
             <h3>作品列表</h3>
             <ul class="product-list">
                 <li><button class="product-btn active" onclick="showProduct('bag1')">牛角可頌包 (黑)</button></li>
-                <li><button class="product-btn" onclick="showProduct('bag2')">經典托特包 (棕)</button></li>
+                <li><button class="product-btn" onclick="showProduct('bag2')">經典方扣肩背包</button></li>
                 <li><button class="product-btn" onclick="showProduct('bag3')">英倫劍橋公事包</button></li>
             </ul>
         </aside>
@@ -286,28 +286,21 @@
                     <div class="main-image-container">
                         <img id="main-img-1" src="images/bags/bag-croissant-black.jpg" alt="黑色牛角包" class="main-image">
                     </div>
-                    
                     <div class="product-desc">
                         <h2>職人手作牛角可頌包</h2>
                         <span class="price">NT$ 另洽</span>
-                        
                         <p class="desc-text">
                             這款牛角包採用義大利頂級植鞣革製作，經過多次手工揉製，呈現出自然且獨特的皺褶紋理，宛如剛出爐的可頌般充滿層次感。
                             <br><br>
                             包身柔軟卻不失挺度，黑色皮革在光線下散發低調奢華的光澤。拉鍊處特別設計了皮革繩結，方便開合且增添細節美感。
                         </p>
-                        
                         <ul class="spec-list">
                             <li><i class="fa-solid fa-layer-group"></i> 材質：義大利植鞣牛皮</li>
-                            <li><i class="fa-solid fa-palette"></i> 顏色：極致黑 (可客製其他顏色)</li>
+                            <li><i class="fa-solid fa-palette"></i> 顏色：極致黑</li>
                             <li><i class="fa-solid fa-screwdriver-wrench"></i> 工藝：傳統雙針手縫 / 邊緣磨光</li>
                             <li><i class="fa-solid fa-ruler-combined"></i> 尺寸：可放入長夾與手機</li>
                         </ul>
-
-                        <a href="tel:0987927250" class="btn-order">
-                            <i class="fa-solid fa-phone"></i> 詢問訂製
-                        </a>
-
+                        <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
                         <div class="gallery-section">
                             <h4 class="gallery-title">細節鑑賞</h4>
                             <div class="gallery-grid">
@@ -323,15 +316,38 @@
             <div id="bag2" class="product-detail">
                 <div class="product-top">
                     <div class="main-image-container">
-                        <div style="width:100%; height:400px; background:#f0f0f0; display:flex; justify-content:center; align-items:center; color:#999;">
-                            托特包照片待補
-                        </div>
+                        <img id="main-img-2" src="images/bags/bag-classic-box.jpg" alt="經典方扣肩背包" class="main-image">
                     </div>
+                    
                     <div class="product-desc">
-                        <h2>經典植鞣托特包</h2>
+                        <h2>經典金釦復古方包</h2>
                         <span class="price">NT$ 另洽</span>
-                        <p class="desc-text">這是一款適合日常通勤的大容量托特包，簡約俐落的線條設計，無論是上班或休閒皆能完美搭配。</p>
-                        <a href="tel:0987927250" class="btn-order"><i class="fa-solid fa-phone"></i> 詢問訂製</a>
+                        
+                        <p class="desc-text">
+                            採用極簡的方正輪廓設計，搭配精緻的金色編織紋方扣，展現出優雅復古的氣質。
+                            <br><br>
+                            包身選用硬挺的光面植鞣革，邊緣飾以白色車線，勾勒出立體的結構感。翻蓋設計簡潔俐落，是日常穿搭與正式場合皆宜的經典單品。
+                        </p>
+                        
+                        <ul class="spec-list">
+                            <li><i class="fa-solid fa-layer-group"></i> 材質：光面植鞣革 (硬挺手感)</li>
+                            <li><i class="fa-solid fa-palette"></i> 顏色：經典黑 / 白色車線</li>
+                            <li><i class="fa-solid fa-gem"></i> 五金：金色紋理方扣</li>
+                            <li><i class="fa-solid fa-ruler-combined"></i> 尺寸：適合隨身輕便出行</li>
+                        </ul>
+
+                        <a href="tel:0987927250" class="btn-order">
+                            <i class="fa-solid fa-phone"></i> 詢問訂製
+                        </a>
+
+                        <div class="gallery-section">
+                            <h4 class="gallery-title">細節鑑賞</h4>
+                            <div class="gallery-grid">
+                                <img src="images/bags/bag-classic-box.jpg" class="thumb active" onclick="changeImage('bag2', this)">
+                                <img src="images/bags/bag-classic-box-02.jpg" class="thumb" onclick="changeImage('bag2', this)">
+                                <img src="images/bags/bag-classic-box-03.jpg" class="thumb" onclick="changeImage('bag2', this)">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -370,40 +386,30 @@
     <script>
         // 1. 切換產品 (左邊選單)
         function showProduct(productId) {
-            // 隱藏所有產品內容
             document.querySelectorAll('.product-detail').forEach(div => {
                 div.classList.remove('active');
             });
-            // 移除所有按鈕的 active 狀態
             document.querySelectorAll('.product-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
 
-            // 顯示被點選的產品內容
             document.getElementById(productId).classList.add('active');
-            
-            // 讓被點選的按鈕變色
             event.currentTarget.classList.add('active');
-
-            // 切換產品時，畫面滾動回頂部 (優化手機體驗)
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // 2. 切換圖片 (右下縮圖)
         function changeImage(productId, thumbElement) {
-            // 找到該產品區域的主圖
+            // 找到該產品區域的主圖 (注意這裡會找該 ID 下的 main-image)
             const mainImg = document.querySelector(`#${productId} .main-image`);
             
-            // 淡出效果 (Optional)
             mainImg.style.opacity = 0;
             
             setTimeout(() => {
-                // 把主圖的 src 換成縮圖的 src
                 mainImg.src = thumbElement.src;
                 mainImg.style.opacity = 1;
             }, 200);
 
-            // 處理縮圖的框框樣式 (Active)
             document.querySelectorAll(`#${productId} .thumb`).forEach(img => {
                 img.classList.remove('active');
             });
