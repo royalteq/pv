@@ -5,22 +5,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
 
-    burger.addEventListener('click', () => {
-        // 切換選單顯示/隱藏
-        nav.classList.toggle('nav-active');
+    if (burger) {
+        burger.addEventListener('click', () => {
+            // 切換選單顯示/隱藏
+            nav.classList.toggle('nav-active');
 
-        // 選單項目的依序淡入動畫
-        navLinks.forEach((link, index) => {
-            if (link.style.animation) {
-                link.style.animation = '';
-            } else {
-                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-            }
+            // 選單項目的依序淡入動畫
+            navLinks.forEach((link, index) => {
+                if (link.style.animation) {
+                    link.style.animation = '';
+                } else {
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                }
+            });
+
+            // 漢堡圖示變形動畫 (三條線變 X)
+            burger.classList.toggle('toggle');
         });
-
-        // 漢堡圖示變形動畫 (三條線變 X)
-        burger.classList.toggle('toggle');
-    });
+    }
 
     // 2. 滾動淡入特效 (Intersection Observer API)
     const faders = document.querySelectorAll('.fade-in');
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             } else {
                 entry.target.classList.add('visible');
-                appearOnScroll.unobserve(entry.target); // 動畫只執行一次，避免來回閃爍
+                appearOnScroll.unobserve(entry.target); // 動畫只執行一次
             }
         });
     }, appearOptions);
