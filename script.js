@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
+    const logo = document.querySelector('.logo'); // 抓取 Logo
 
     if (burger) {
         burger.addEventListener('click', () => {
@@ -15,12 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (link.style.animation) {
                     link.style.animation = '';
                 } else {
-                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    // 加快動畫速度，更俐落
+                    link.style.animation = `navLinkFade 0.4s ease forwards ${index / 7 + 0.2}s`;
                 }
             });
 
             // 漢堡圖示變形動畫 (三條線變 X)
             burger.classList.toggle('toggle');
+            
+            // 切換 Logo 顏色 (在深色選單上變白色)
+            logo.classList.toggle('logo-white');
         });
     }
 
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const faders = document.querySelectorAll('.fade-in');
 
     const appearOptions = {
-        threshold: 0.1, // 當物件進入畫面 10% 時觸發
+        threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
     };
 
@@ -38,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             } else {
                 entry.target.classList.add('visible');
-                appearOnScroll.unobserve(entry.target); // 動畫只執行一次
+                appearOnScroll.unobserve(entry.target);
             }
         });
     }, appearOptions);
@@ -53,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(nav.classList.contains('nav-active')){
                 nav.classList.remove('nav-active');
                 burger.classList.remove('toggle');
+                logo.classList.remove('logo-white');
                 navLinks.forEach(link => {
                     link.style.animation = '';
                 });
