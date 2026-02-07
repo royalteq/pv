@@ -1,320 +1,176 @@
-/* --- 變數設定：暗黑奢華風 (Dark Luxury) --- */
+/* --- 變數設定 (Dark Luxury) --- */
 :root {
-    --bg-black: #0a0a0a;       /* 極致黑 */
-    --bg-dark: #141414;        /* 深灰背景 */
+    --bg-black: #0a0a0a;
+    --bg-dark: #141414;
     --text-white: #ffffff;
     --text-grey: #a0a0a0;
-    
-    /* 金色系：使用香檳金與古銅金，避免土豪金 */
-    --gold-primary: #D4AF37;   
+    --gold-primary: #D4AF37;
     --gold-light: #F3E5AB;
     --gold-gradient: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     
-    /* 字體系統 */
-    --font-royal: 'Cinzel', serif;          /* 品牌標題 */
-    --font-fashion: 'Bodoni Moda', serif;   /* 時尚大標 */
-    --font-modern: 'Lato', sans-serif;      /* 內文 */
-    --font-zh: 'Noto Serif TC', serif;      /* 中文宋體 */
+    --font-royal: 'Cinzel', serif;
+    --font-fashion: 'Bodoni Moda', serif;
+    --font-modern: 'Lato', sans-serif;
+    --font-zh: 'Noto Serif TC', serif;
 }
 
 /* --- 全域設定 --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { 
-    background-color: var(--bg-black); 
-    font-family: var(--font-modern); 
-    color: var(--text-white); 
-    line-height: 1.7; 
-    overflow-x: hidden; 
-}
-
-h1, h2, h3 { color: var(--text-white); font-weight: 400; }
+body { background-color: var(--bg-black); font-family: var(--font-modern); color: var(--text-white); line-height: 1.7; overflow-x: hidden; }
+h1, h2, h3, h4 { color: var(--text-white); font-weight: 400; }
 a { text-decoration: none; color: inherit; transition: 0.4s ease; }
 ul { list-style: none; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
 .section-padding { padding: 120px 0; }
 .text-center { text-align: center; }
-.text-gold { 
-    background: var(--gold-gradient); 
-    -webkit-background-clip: text; 
-    background-clip: text; 
-    color: transparent; 
-}
+.text-gold { background: var(--gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .bg-dark { background-color: var(--bg-dark); }
 .bg-black { background-color: var(--bg-black); }
 
 /* --- 導航列 (Navbar) --- */
 header {
     position: fixed; top: 0; width: 100%; height: 90px;
-    background: rgba(10, 10, 10, 0.85); /* 提高不透明度，增加閱讀性 */
-    backdrop-filter: blur(15px);       
-    z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
-    transition: 0.3s;
+    background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(15px);
+    z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
 }
 .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
-
-.logo { 
-    font-family: var(--font-royal); font-size: 1.6rem; letter-spacing: 2px; color: var(--text-white); 
-}
+.logo { font-family: var(--font-royal); font-size: 1.6rem; letter-spacing: 2px; color: var(--text-white); }
 .logo-dot { color: var(--gold-primary); }
 
 .nav-links { display: flex; align-items: center; }
-.nav-links li { margin-left: 40px; }
+.nav-links > li { margin-left: 40px; position: relative; } /* 為 Dropdown 設定相對定位 */
 
-/* ★★★ 導航連結：上下排版 (中英對照) ★★★ */
-.nav-links a { 
-    display: flex; 
-    flex-direction: column; /* 上下排列 */
-    align-items: center;
-    text-decoration: none;
-    line-height: 1.2;
-    padding: 5px 0;
-}
-
-.nav-en {
-    font-family: var(--font-modern);
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    color: var(--text-white);
-    font-weight: 700;
-    transition: 0.3s;
-}
-
-.nav-zh {
-    font-family: var(--font-zh);
-    font-size: 0.65rem; /* 字體較小 */
-    color: var(--text-grey); /* 顏色較淡，強調層次 */
-    letter-spacing: 1px;
-    margin-top: 2px;
-    transition: 0.3s;
-}
-
+.nav-links a { display: flex; flex-direction: column; align-items: center; padding: 5px 0; }
+.nav-en { font-family: var(--font-modern); font-size: 0.85rem; letter-spacing: 2px; color: var(--text-white); font-weight: 700; transition: 0.3s; }
+.nav-zh { font-family: var(--font-zh); font-size: 0.65rem; color: var(--text-grey); letter-spacing: 1px; margin-top: 2px; transition: 0.3s; }
 .nav-links a:hover .nav-en { color: var(--gold-primary); }
 .nav-links a:hover .nav-zh { color: #fff; }
 
-/* 聯絡我們按鈕特殊樣式 */
-.btn-nav {
-    border: 1px solid rgba(255,255,255,0.3);
-    padding: 5px 20px !important;
-    border-radius: 2px;
-}
-.btn-nav:hover {
-    border-color: var(--gold-primary);
-    background: rgba(212, 175, 55, 0.1);
-}
-
-/* 漢堡選單 */
+.btn-nav { border: 1px solid rgba(255,255,255,0.3); padding: 5px 20px !important; border-radius: 2px; }
+.btn-nav:hover { border-color: var(--gold-primary); background: rgba(212, 175, 55, 0.1); }
 .burger { display: none; cursor: pointer; }
 .burger div { width: 30px; height: 2px; background-color: var(--text-white); margin: 6px; transition: 0.3s; }
 
+/* ★★★ 下拉選單 (Dropdown) 樣式 ★★★ */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* 在按鈕正下方 */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(10, 10, 10, 0.95);
+    min-width: 220px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    border: 1px solid var(--gold-primary);
+    border-top: 3px solid var(--gold-primary);
+    padding: 10px 0;
+    z-index: 1001;
+}
 
-/* --- ★★★ 奢華主視覺 (Luxury Hero) ★★★ */
+.dropdown:hover .dropdown-content { display: block; animation: fadeInDown 0.3s ease; }
+.dropdown-content li { margin: 0; display: block; text-align: center; }
+.dropdown-content a {
+    color: #ccc; padding: 12px 16px; text-decoration: none; display: block;
+    font-family: var(--font-zh); font-size: 0.9rem; letter-spacing: 1px;
+}
+.dropdown-content a:hover { background-color: rgba(212, 175, 55, 0.1); color: var(--gold-primary); }
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* --- ★★★ 送禮指南展示區 (Gift Guide Section) ★★★ */
+.gift-category { margin-bottom: 60px; }
+.category-title {
+    font-family: var(--font-zh); font-size: 1.5rem; margin-bottom: 30px;
+    color: var(--gold-primary); border-left: 3px solid var(--gold-primary); padding-left: 15px;
+}
+.gift-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+.gift-item {
+    background: #1a1a1a; padding: 30px 20px; border-radius: 4px; border: 1px solid #333;
+    transition: 0.3s; display: block;
+}
+.gift-item:hover { border-color: var(--gold-primary); transform: translateY(-5px); background: #222; }
+.gift-icon { font-size: 2rem; color: var(--gold-light); margin-bottom: 15px; }
+.gift-item h4 { font-family: var(--font-zh); font-size: 1.1rem; margin-bottom: 10px; color: #fff; }
+.gift-item p { font-size: 0.85rem; color: #888; line-height: 1.5; }
+.gift-divider { border: 0; border-top: 1px solid #333; margin: 40px 0; }
+
+/* --- Hero & General --- */
 .luxury-hero {
-    height: 100vh;
-    background-color: #000;
-    background-image: url('images/hero-bg-trendy.png'); 
-    background-size: cover;
-    background-position: center;
-    position: relative;
+    height: 100vh; background-color: #000; background-image: url('images/hero-bg-trendy.png'); 
+    background-size: cover; background-position: center; position: relative;
     display: flex; justify-content: center; align-items: center; text-align: center;
 }
-
-.hero-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,1) 100%);
-    z-index: 1;
-}
-
+.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,1) 100%); z-index: 1; }
 .hero-content { position: relative; z-index: 2; padding: 0 20px; max-width: 900px; }
+.brand-line { width: 2px; height: 60px; background: var(--gold-gradient); margin: 0 auto 30px; }
+.luxury-intro { font-family: var(--font-modern); letter-spacing: 5px; font-size: 0.9rem; color: var(--gold-light); margin-bottom: 20px; text-transform: uppercase; }
 
-/* 品牌裝飾線 */
-.brand-line {
-    width: 2px; height: 60px; background: var(--gold-gradient);
-    margin: 0 auto 30px;
-}
-
-.luxury-intro {
-    font-family: var(--font-modern); letter-spacing: 5px; font-size: 0.9rem;
-    color: var(--gold-light); margin-bottom: 20px; text-transform: uppercase;
-}
-
-/* ★★★ 大標題：燙金印章特效 (Golden Stamp/Border Effect) ★★★ */
-.title-wrapper {
-    margin-bottom: 40px;
-    padding: 10px;
-    display: inline-block;
-}
-
+/* 燙金標題 */
 .luxury-title {
-    font-family: var(--font-zh);
-    font-size: 5.5rem; 
-    line-height: 1.1;
-    font-weight: 700;
-    
-    /* 核心燙金特效 */
-    color: transparent; /* 文字透明 */
-    background: linear-gradient(to bottom, #cfc09f 20%, #ffecb3 40%, #3a2c0f 80%); /* 金屬光澤漸層 */
-    -webkit-background-clip: text;
-    background-clip: text;
-    
-    /* 金邊描邊 (Gold Border) */
-    -webkit-text-stroke: 1px #a67c00; 
-    
-    /* 立體陰影 (Stamp Effect) */
-    filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.8));
-    
-    margin-bottom: 5px;
+    font-family: var(--font-zh); font-size: 5.5rem; line-height: 1.1; font-weight: 700;
+    color: transparent; background: linear-gradient(to bottom, #cfc09f 20%, #ffecb3 40%, #3a2c0f 80%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-stroke: 1px #a67c00;
+    filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.8)); margin-bottom: 5px;
 }
-
 .sub-title-zh {
-    display: block; 
-    font-size: 1.6rem; 
-    font-weight: 300; 
-    letter-spacing: 12px;
-    margin-top: 15px; 
-    color: var(--gold-light); 
-    font-family: var(--font-zh);
-    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-    
-    /* 兩側裝飾線 */
-    position: relative;
-    display: inline-block;
+    display: block; font-size: 1.6rem; font-weight: 300; letter-spacing: 12px; margin-top: 15px;
+    color: var(--gold-light); font-family: var(--font-zh); text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    position: relative; display: inline-block;
 }
-.sub-title-zh::before, .sub-title-zh::after {
-    content: '';
-    display: inline-block;
-    width: 30px; height: 1px;
-    background: var(--gold-primary);
-    vertical-align: middle;
-    margin: 0 15px;
-    opacity: 0.7;
-}
-
-.hero-desc {
-    font-family: var(--font-fashion); font-style: italic; font-size: 1.2rem;
-    color: #ccc; margin-bottom: 50px;
-}
-
-/* 奢華按鈕 */
+.sub-title-zh::before, .sub-title-zh::after { content: ''; display: inline-block; width: 30px; height: 1px; background: var(--gold-primary); vertical-align: middle; margin: 0 15px; opacity: 0.7; }
+.hero-desc { font-family: var(--font-fashion); font-style: italic; font-size: 1.2rem; color: #ccc; margin-bottom: 50px; }
 .btn-luxury {
-    display: inline-block; padding: 15px 50px;
-    border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.3);
-    color: #fff; letter-spacing: 3px; font-size: 0.9rem;
-    backdrop-filter: blur(5px); transition: 0.4s;
+    display: inline-block; padding: 15px 50px; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.3);
+    color: #fff; letter-spacing: 3px; font-size: 0.9rem; backdrop-filter: blur(5px); transition: 0.4s;
 }
-.btn-luxury:hover {
-    background: var(--gold-primary); border-color: var(--gold-primary);
-    color: #000; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-}
-.btn-luxury i { margin-left: 10px; transition: 0.3s; }
-.btn-luxury:hover i { transform: translateX(5px); }
+.btn-luxury:hover { background: var(--gold-primary); border-color: var(--gold-primary); color: #000; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
 
-/* 滾動提示 */
-.scroll-indicator {
-    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-    z-index: 2; display: flex; flex-direction: column; align-items: center;
-}
-.scroll-indicator span { font-size: 0.7rem; letter-spacing: 3px; color: #666; margin-bottom: 10px; }
-.scroll-indicator .line {
-    width: 1px; height: 50px; background: linear-gradient(to bottom, #666, transparent);
-}
-
-
-/* --- 跑馬燈 (Marquee) --- */
-.marquee-container {
-    background: var(--gold-primary); color: #000; padding: 15px 0;
-    overflow: hidden; white-space: nowrap; border-bottom: 1px solid #000;
-}
-.marquee-content {
-    display: inline-block; animation: marquee 20s linear infinite;
-    font-family: var(--font-modern); font-weight: 700; letter-spacing: 2px; font-size: 0.9rem;
-}
+/* Marquee */
+.marquee-container { background: var(--gold-primary); color: #000; padding: 15px 0; overflow: hidden; white-space: nowrap; border-bottom: 1px solid #000; }
+.marquee-content { display: inline-block; animation: marquee 20s linear infinite; font-family: var(--font-modern); font-weight: 700; letter-spacing: 2px; font-size: 0.9rem; }
 .marquee-content span { margin: 0 30px; }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-
-/* --- 品牌哲學 (About) --- */
+/* Sections */
 .about-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
 .img-frame { border: 1px solid rgba(212, 175, 55, 0.3); padding: 15px; }
-.img-placeholder {
-    height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-    font-family: var(--font-royal); font-size: 1.5rem;
-}
+.img-placeholder { height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: var(--font-royal); font-size: 1.5rem; }
 .img-placeholder i { font-size: 3rem; margin-bottom: 20px; color: var(--gold-primary); }
-
 .section-heading { font-family: var(--font-zh); font-size: 3rem; margin-bottom: 40px; line-height: 1.3; }
 .text-body { color: var(--text-grey); font-size: 1.05rem; line-height: 2; margin-bottom: 40px; text-align: justify; }
 
-
-/* --- 產品展示 (Gallery) --- */
 .section-header { text-align: center; margin-bottom: 80px; }
-.section-subtitle { 
-    display: block; font-family: var(--font-modern); font-size: 0.8rem; letter-spacing: 4px; 
-    color: var(--gold-primary); margin-bottom: 15px; 
-}
-
+.section-subtitle { display: block; font-family: var(--font-modern); font-size: 0.8rem; letter-spacing: 4px; color: var(--gold-primary); margin-bottom: 15px; }
 .luxury-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-
 .luxury-card { position: relative; group: hover; }
-.card-image { 
-    position: relative; overflow: hidden; height: 500px; /* 長方形比例，更像雜誌 */
-    border: 1px solid #333; 
-}
-.card-image img, .img-placeholder-product { 
-    width: 100%; height: 100%; transition: 0.6s ease; 
-}
-.img-placeholder-product { 
-    display: flex; justify-content: center; align-items: center; text-align: center; 
-}
-.placeholder-text { 
-    font-family: var(--font-fashion); color: #fff; font-size: 1.5rem; letter-spacing: 2px; line-height: 1.5; 
-}
-
-.card-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.4); opacity: 0; transition: 0.4s;
-    display: flex; justify-content: center; align-items: center;
-}
-.view-btn {
-    border: 1px solid #fff; padding: 12px 30px; color: #fff; font-size: 0.8rem; letter-spacing: 2px;
-    background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
-}
-.view-btn:hover { background: #fff; color: #000; }
-
-.luxury-card:hover .card-image img, 
-.luxury-card:hover .img-placeholder-product { transform: scale(1.05); }
+.card-image { position: relative; overflow: hidden; height: 500px; border: 1px solid #333; }
+.card-image img, .img-placeholder-product { width: 100%; height: 100%; transition: 0.6s ease; }
+.img-placeholder-product { display: flex; justify-content: center; align-items: center; text-align: center; }
+.placeholder-text { font-family: var(--font-fashion); color: #fff; font-size: 1.5rem; letter-spacing: 2px; line-height: 1.5; }
+.card-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); opacity: 0; transition: 0.4s; display: flex; justify-content: center; align-items: center; }
+.view-btn { border: 1px solid #fff; padding: 12px 30px; color: #fff; font-size: 0.8rem; letter-spacing: 2px; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
+.luxury-card:hover .card-image img, .luxury-card:hover .img-placeholder-product { transform: scale(1.05); }
 .luxury-card:hover .card-overlay { opacity: 1; }
-
 .card-info { padding-top: 25px; text-align: center; }
 .card-info h3 { font-family: var(--font-zh); font-size: 1.2rem; margin-bottom: 5px; color: #fff; }
 .card-info p { font-family: var(--font-fashion); font-style: italic; color: #666; font-size: 0.9rem; }
 
-
-/* --- 客製化 (Bespoke) --- */
-.gold-icon { font-size: 2.5rem; color: var(--gold-primary); margin-bottom: 20px; }
+.bespoke-content i { font-size: 2.5rem; color: var(--gold-primary); margin-bottom: 20px; }
 .bespoke-sub { font-family: var(--font-zh); font-size: 2rem; color: #fff; margin-bottom: 30px; font-weight: 300; }
 .bespoke-text { color: #aaa; margin-bottom: 50px; line-height: 2; }
-
-.btn-outline-gold {
-    display: inline-block; border: 1px solid var(--gold-primary); color: var(--gold-primary);
-    padding: 15px 40px; letter-spacing: 2px; font-size: 0.9rem; transition: 0.3s;
-}
+.btn-outline-gold { display: inline-block; border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 15px 40px; letter-spacing: 2px; font-size: 0.9rem; transition: 0.3s; }
 .btn-outline-gold:hover { background: var(--gold-primary); color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
 
-
-/* --- 聯絡 (Contact) --- */
 .contact-buttons { display: flex; justify-content: center; gap: 30px; margin-top: 40px; }
-.btn-contact-luxury {
-    display: flex; align-items: center; background: #1a1a1a; border: 1px solid #333;
-    padding: 15px 30px; min-width: 200px; justify-content: center; transition: 0.3s;
-}
+.btn-contact-luxury { display: flex; align-items: center; background: #1a1a1a; border: 1px solid #333; padding: 15px 30px; min-width: 200px; justify-content: center; transition: 0.3s; }
 .btn-contact-luxury:hover { border-color: var(--gold-primary); transform: translateY(-3px); }
 .btn-icon { margin-right: 15px; color: var(--gold-primary); }
 .btn-text { color: #fff; letter-spacing: 1px; font-size: 0.9rem; }
-.btn-contact-luxury.line:hover .btn-icon { color: #06C755; }
 
-
-/* --- 頁尾 (Footer) --- */
 .luxury-footer { background-color: #050505; padding: 100px 0 50px; text-align: center; border-top: 1px solid #1a1a1a; }
 .footer-logo { font-family: var(--font-royal); font-size: 2rem; color: #fff; letter-spacing: 3px; margin-bottom: 10px; }
 .footer-tagline { font-family: var(--font-fashion); font-style: italic; color: #666; font-size: 1rem; }
@@ -324,36 +180,22 @@ header {
 .footer-social a:hover { color: var(--gold-primary); }
 .copyright { margin-top: 50px; color: #444; font-size: 0.75rem; letter-spacing: 1px; }
 
-
-/* --- 動畫 --- */
 .fade-in { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-
-/* --- RWD 手機版 --- */
+/* RWD */
 @media screen and (max-width: 768px) {
-    .nav-links {
-        position: absolute; right: 0; top: 0; height: 100vh; width: 100%;
-        background: #000; flex-direction: column; justify-content: center;
-        transform: translateX(100%); transition: 0.4s;
-    }
-    .nav-links li { margin: 25px 0; margin-left: 0; /* 手機版置中 */ }
+    .nav-links { position: absolute; right: 0; top: 0; height: 100vh; width: 100%; background: #000; flex-direction: column; justify-content: center; transform: translateX(100%); transition: 0.4s; }
+    .nav-links > li { margin: 25px 0; margin-left: 0; }
     
-    /* 手機版導覽字體調整 */
-    .nav-en { font-size: 1.2rem; margin-bottom: 5px; }
-    .nav-zh { font-size: 0.9rem; color: var(--gold-primary); }
+    /* 手機版 Dropdown 調整 */
+    .dropdown:hover .dropdown-content { position: static; transform: none; box-shadow: none; border: none; border-top: 1px solid #333; padding: 10px 0; background: #111; }
     
+    .nav-en { font-size: 1.2rem; }
     .nav-active { transform: translateX(0); }
     .burger { display: block; position: relative; z-index: 1001; }
-    
-    /* Hero 文字 RWD */
     .luxury-title { font-size: 3.8rem; letter-spacing: 5px; }
     .sub-title-zh { font-size: 1rem; letter-spacing: 5px; }
-    .sub-title-zh::before, .sub-title-zh::after { width: 15px; margin: 0 5px; }
-    
-    .about-layout { grid-template-columns: 1fr; gap: 40px; }
-    .img-placeholder { height: 350px; }
-    
-    .luxury-grid { grid-template-columns: 1fr; }
+    .about-layout, .luxury-grid, .gift-grid { grid-template-columns: 1fr; }
     .contact-buttons { flex-direction: column; gap: 15px; }
 }
