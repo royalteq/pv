@@ -43,11 +43,11 @@ ul { list-style: none; }
 .bg-dark { background-color: var(--bg-dark); }
 .bg-black { background-color: var(--bg-black); }
 
-/* --- 導航列 (磨砂玻璃) --- */
+/* --- 導航列 (Navbar) --- */
 header {
     position: fixed; top: 0; width: 100%; height: 90px;
-    background: rgba(10, 10, 10, 0.7); /* 半透明黑 */
-    backdrop-filter: blur(15px);       /* 磨砂效果 */
+    background: rgba(10, 10, 10, 0.85); /* 提高不透明度，增加閱讀性 */
+    backdrop-filter: blur(15px);       
     z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
     transition: 0.3s;
 }
@@ -59,35 +59,59 @@ header {
 .logo-dot { color: var(--gold-primary); }
 
 .nav-links { display: flex; align-items: center; }
-.nav-links li { margin-left: 50px; }
+.nav-links li { margin-left: 40px; }
+
+/* ★★★ 導航連結：上下排版 (中英對照) ★★★ */
 .nav-links a { 
-    font-size: 0.85rem; letter-spacing: 2px; color: var(--text-grey); 
-    font-family: var(--font-modern); text-transform: uppercase; position: relative;
+    display: flex; 
+    flex-direction: column; /* 上下排列 */
+    align-items: center;
+    text-decoration: none;
+    line-height: 1.2;
+    padding: 5px 0;
 }
-.nav-links a::after {
-    content: ''; position: absolute; width: 0; height: 1px; bottom: -5px; left: 0;
-    background-color: var(--gold-primary); transition: 0.3s;
-}
-.nav-links a:hover { color: var(--text-white); }
-.nav-links a:hover::after { width: 100%; }
 
+.nav-en {
+    font-family: var(--font-modern);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--text-white);
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.nav-zh {
+    font-family: var(--font-zh);
+    font-size: 0.65rem; /* 字體較小 */
+    color: var(--text-grey); /* 顏色較淡，強調層次 */
+    letter-spacing: 1px;
+    margin-top: 2px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover .nav-en { color: var(--gold-primary); }
+.nav-links a:hover .nav-zh { color: #fff; }
+
+/* 聯絡我們按鈕特殊樣式 */
 .btn-nav {
-    border: 1px solid var(--text-white); padding: 8px 25px; border-radius: 0; 
-    color: var(--text-white) !important;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 5px 20px !important;
+    border-radius: 2px;
 }
-.btn-nav:hover { background: var(--text-white); color: #000 !important; }
-.btn-nav:hover::after { display: none; } /* 移除底線 */
+.btn-nav:hover {
+    border-color: var(--gold-primary);
+    background: rgba(212, 175, 55, 0.1);
+}
 
-/* 漢堡選單 (手機) */
+/* 漢堡選單 */
 .burger { display: none; cursor: pointer; }
 .burger div { width: 30px; height: 2px; background-color: var(--text-white); margin: 6px; transition: 0.3s; }
 
 
-/* --- ★★★ 奢華主視覺 (Luxury Hero) ★★★ --- */
+/* --- ★★★ 奢華主視覺 (Luxury Hero) ★★★ */
 .luxury-hero {
     height: 100vh;
     background-color: #000;
-    /* ★ 使用您的圖片 */
     background-image: url('images/hero-bg-trendy.png'); 
     background-size: cover;
     background-position: center;
@@ -95,10 +119,9 @@ header {
     display: flex; justify-content: center; align-items: center; text-align: center;
 }
 
-/* 遮罩：更重的黑色漸層，營造神祕感 */
 .hero-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,1) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,1) 100%);
     z-index: 1;
 }
 
@@ -115,15 +138,56 @@ header {
     color: var(--gold-light); margin-bottom: 20px; text-transform: uppercase;
 }
 
-/* 雙字體設計 */
-.luxury-title {
-    font-family: var(--font-zh); font-size: 5rem; line-height: 1.2;
-    margin-bottom: 30px; font-weight: 700; color: #fff;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+/* ★★★ 大標題：燙金印章特效 (Golden Stamp/Border Effect) ★★★ */
+.title-wrapper {
+    margin-bottom: 40px;
+    padding: 10px;
+    display: inline-block;
 }
+
+.luxury-title {
+    font-family: var(--font-zh);
+    font-size: 5.5rem; 
+    line-height: 1.1;
+    font-weight: 700;
+    
+    /* 核心燙金特效 */
+    color: transparent; /* 文字透明 */
+    background: linear-gradient(to bottom, #cfc09f 20%, #ffecb3 40%, #3a2c0f 80%); /* 金屬光澤漸層 */
+    -webkit-background-clip: text;
+    background-clip: text;
+    
+    /* 金邊描邊 (Gold Border) */
+    -webkit-text-stroke: 1px #a67c00; 
+    
+    /* 立體陰影 (Stamp Effect) */
+    filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.8));
+    
+    margin-bottom: 5px;
+}
+
 .sub-title-zh {
-    display: block; font-size: 1.5rem; font-weight: 300; letter-spacing: 15px;
-    margin-top: 10px; color: var(--text-grey); font-family: var(--font-zh);
+    display: block; 
+    font-size: 1.6rem; 
+    font-weight: 300; 
+    letter-spacing: 12px;
+    margin-top: 15px; 
+    color: var(--gold-light); 
+    font-family: var(--font-zh);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    
+    /* 兩側裝飾線 */
+    position: relative;
+    display: inline-block;
+}
+.sub-title-zh::before, .sub-title-zh::after {
+    content: '';
+    display: inline-block;
+    width: 30px; height: 1px;
+    background: var(--gold-primary);
+    vertical-align: middle;
+    margin: 0 15px;
+    opacity: 0.7;
 }
 
 .hero-desc {
@@ -169,7 +233,7 @@ header {
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 
-/* --- 品牌哲學 (About) - 雜誌排版 --- */
+/* --- 品牌哲學 (About) --- */
 .about-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
 .img-frame { border: 1px solid rgba(212, 175, 55, 0.3); padding: 15px; }
 .img-placeholder {
@@ -180,7 +244,6 @@ header {
 
 .section-heading { font-family: var(--font-zh); font-size: 3rem; margin-bottom: 40px; line-height: 1.3; }
 .text-body { color: var(--text-grey); font-size: 1.05rem; line-height: 2; margin-bottom: 40px; text-align: justify; }
-.signature-img { height: 50px; opacity: 0.6; filter: invert(1); } /* 模擬簽名檔 */
 
 
 /* --- 產品展示 (Gallery) --- */
@@ -274,13 +337,19 @@ header {
         background: #000; flex-direction: column; justify-content: center;
         transform: translateX(100%); transition: 0.4s;
     }
-    .nav-links li { margin: 30px 0; }
-    .nav-links a { font-size: 1.2rem; color: #fff; }
+    .nav-links li { margin: 25px 0; margin-left: 0; /* 手機版置中 */ }
+    
+    /* 手機版導覽字體調整 */
+    .nav-en { font-size: 1.2rem; margin-bottom: 5px; }
+    .nav-zh { font-size: 0.9rem; color: var(--gold-primary); }
+    
     .nav-active { transform: translateX(0); }
     .burger { display: block; position: relative; z-index: 1001; }
     
-    .luxury-title { font-size: 3.5rem; }
-    .sub-title-zh { font-size: 1rem; letter-spacing: 8px; }
+    /* Hero 文字 RWD */
+    .luxury-title { font-size: 3.8rem; letter-spacing: 5px; }
+    .sub-title-zh { font-size: 1rem; letter-spacing: 5px; }
+    .sub-title-zh::before, .sub-title-zh::after { width: 15px; margin: 0 5px; }
     
     .about-layout { grid-template-columns: 1fr; gap: 40px; }
     .img-placeholder { height: 350px; }
