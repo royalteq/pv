@@ -1,39 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. 手機版導航選單功能
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
-    const logo = document.querySelector('.logo'); // 抓取 Logo
+    const logo = document.querySelector('.logo'); 
 
     if (burger) {
         burger.addEventListener('click', () => {
-            // 切換選單顯示/隱藏
             nav.classList.toggle('nav-active');
-
-            // 選單項目的依序淡入動畫
+            
+            // 漢堡圖示動畫 (線條交叉)
+            burger.classList.toggle('toggle');
+            
             navLinks.forEach((link, index) => {
                 if (link.style.animation) {
                     link.style.animation = '';
                 } else {
-                    // 加快動畫速度，更俐落
-                    link.style.animation = `navLinkFade 0.4s ease forwards ${index / 7 + 0.2}s`;
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
                 }
             });
-
-            // 漢堡圖示變形動畫 (三條線變 X)
-            burger.classList.toggle('toggle');
-            
-            // 切換 Logo 顏色 (在深色選單上變白色)
-            logo.classList.toggle('logo-white');
         });
     }
 
-    // 2. 滾動淡入特效 (Intersection Observer API)
+    // 滾動淡入動畫 (使用較平滑的參數)
     const faders = document.querySelectorAll('.fade-in');
-
     const appearOptions = {
-        threshold: 0.1,
+        threshold: 0.15,
         rootMargin: "0px 0px -50px 0px"
     };
 
@@ -52,17 +44,36 @@ document.addEventListener('DOMContentLoaded', () => {
         appearOnScroll.observe(fader);
     });
 
-    // 3. 手機版點擊連結後自動收合選單
+    // 導航列滾動變色 (Scroll Effect)
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.style.background = 'rgba(10, 10, 10, 0.95)';
+            header.style.borderBottom = '1px solid rgba(50,50,50,0.5)';
+        } else {
+            header.style.background = 'rgba(10, 10, 10, 0.7)';
+            header.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+        }
+    });
+    
+    // 點擊連結收合選單
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if(nav.classList.contains('nav-active')){
-                nav.classList.remove('nav-active');
-                burger.classList.remove('toggle');
-                logo.classList.remove('logo-white');
-                navLinks.forEach(link => {
-                    link.style.animation = '';
-                });
-            }
+            nav.classList.remove('nav-active');
+            burger.classList.remove('toggle');
+            navLinks.forEach(link => link.style.animation = '');
         });
     });
 });
+
+// CSS 動畫 keyframes
+const styleSheet = document.createElement("style");
+styleSheet.innerHTML = `
+@keyframes navLinkFade {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); background-color: #fff; }
+.toggle .line2 { transform: rotate(45deg) translate(-5px, -6px); background-color: #fff; }
+`;
+document.head.appendChild(styleSheet);
