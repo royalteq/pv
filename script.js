@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
+    // --- 既有的導航列功能 ---
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
@@ -7,8 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (burger) {
         burger.addEventListener('click', () => {
             nav.classList.toggle('nav-active');
-            
-            // 漢堡圖示動畫
             burger.classList.toggle('toggle');
             
             navLinks.forEach((link, index) => {
@@ -21,27 +20,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 滾動淡入動畫
+    // 點擊連結收合選單
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('nav-active');
+            burger.classList.remove('toggle');
+            navLinks.forEach(link => link.style.animation = '');
+        });
+    });
+
+    // --- 既有的滾動淡入動畫 ---
     const faders = document.querySelectorAll('.fade-in');
-    const appearOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
-    };
+    const appearOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
 
     const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
         entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
-            } else {
-                entry.target.classList.add('visible');
-                appearOnScroll.unobserve(entry.target);
-            }
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('visible');
+            appearOnScroll.unobserve(entry.target);
         });
     }, appearOptions);
 
-    faders.forEach(fader => {
-        appearOnScroll.observe(fader);
-    });
+    faders.forEach(fader => appearOnScroll.observe(fader));
 
     // 導航列滾動變色
     const header = document.querySelector('header');
@@ -54,18 +54,31 @@ document.addEventListener('DOMContentLoaded', () => {
             header.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
         }
     });
-    
-    // 點擊連結收合選單 (排除 Dropdown 本身)
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            // 如果點到的是 Dropdown 的標題，不收合
-            if(link.classList.contains('dropdown')) return;
 
-            nav.classList.remove('nav-active');
-            burger.classList.remove('toggle');
-            navLinks.forEach(link => link.style.animation = '');
+    // --- ★★★ 新增：送禮指南懸浮視窗邏輯 ★★★ ---
+    const giftBtn = document.getElementById('giftToggle');
+    const giftMenu = document.getElementById('giftMenu');
+    const giftClose = document.getElementById('giftClose');
+
+    if (giftBtn && giftMenu) {
+        // 點擊按鈕切換開關
+        giftBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // 防止冒泡
+            giftMenu.classList.toggle('active');
         });
-    });
+
+        // 點擊 X 關閉
+        giftClose.addEventListener('click', () => {
+            giftMenu.classList.remove('active');
+        });
+
+        // 點擊畫面其他地方自動關閉
+        document.addEventListener('click', (e) => {
+            if (!giftMenu.contains(e.target) && !giftBtn.contains(e.target)) {
+                giftMenu.classList.remove('active');
+            }
+        });
+    }
 });
 
 // CSS 動畫 keyframes
