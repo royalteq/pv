@@ -3,13 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
-    const logo = document.querySelector('.logo'); 
 
     if (burger) {
         burger.addEventListener('click', () => {
             nav.classList.toggle('nav-active');
             
-            // 漢堡圖示動畫 (線條交叉)
+            // 漢堡圖示動畫
             burger.classList.toggle('toggle');
             
             navLinks.forEach((link, index) => {
@@ -22,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 滾動淡入動畫 (使用較平滑的參數)
+    // 滾動淡入動畫
     const faders = document.querySelectorAll('.fade-in');
     const appearOptions = {
         threshold: 0.15,
@@ -44,14 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
         appearOnScroll.observe(fader);
     });
 
-    // 導航列滾動變色 (Scroll Effect)
+    // 導航列滾動變色
     const header = document.querySelector('header');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             header.style.background = 'rgba(10, 10, 10, 0.95)';
             header.style.borderBottom = '1px solid rgba(50,50,50,0.5)';
         } else {
-            header.style.background = 'rgba(10, 10, 10, 0.7)';
+            header.style.background = 'rgba(10, 10, 10, 0.85)';
             header.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
         }
     });
@@ -74,6 +73,7 @@ styleSheet.innerHTML = `
     to { opacity: 1; transform: translateX(0); }
 }
 .toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); background-color: #fff; }
-.toggle .line2 { transform: rotate(45deg) translate(-5px, -6px); background-color: #fff; }
+.toggle .line2 { opacity: 0; }
+.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); background-color: #fff; }
 `;
 document.head.appendChild(styleSheet);
