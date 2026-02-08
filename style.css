@@ -133,89 +133,71 @@ header {
 .fade-in { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-/* --- ★★★ 送禮指南懸浮視窗 (電腦版調整：集中縮小 & RWD選單) ★★★ --- */
+/* --- ★★★ 送禮指南懸浮視窗 (修正版) ★★★ --- */
 .gift-widget {
-    position: fixed; 
-    bottom: 30px; 
-    right: 30px; 
-    z-index: 10000;
+    position: fixed; bottom: 30px; right: 30px; z-index: 10000; /* 確保在最上層 */
 }
 
-/* 懸浮按鈕：保持圓形大小，但內容集中 */
+/* 懸浮按鈕：加大尺寸與集中內容 */
 .gift-btn {
-    width: 100px; height: 100px; /* 大圓 */
+    width: 100px; height: 100px; /* 加大尺寸 */
     border-radius: 50%;
     background: var(--gold-gradient);
     border: none; cursor: pointer;
     box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
     
-    /* Flexbox 絕對置中 */
+    /* ★ 修正點：使用 Flexbox 強制置中並消除間隙 */
     display: flex; 
     flex-direction: column; 
     justify-content: center; 
     align-items: center;
-    padding: 0;
+    padding: 0; /* 清除內距，避免擠壓 */
     
     transition: all 0.3s ease;
     animation: pulse-gold 2s infinite;
-    z-index: 10001;
-}
-
-/* ★★★ 修正點：按鈕內容集中縮小，遠離邊緣 ★★★ */
-.gift-content {
-    transform: scale(0.85); /* 整體縮小 15% */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+    z-index: 10001; /* 比選單高一層 */
 }
 
 .gift-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6); }
 
-/* 圖示 */
+/* 圖示調整 */
 .gift-icon { 
-    font-size: 1.5rem; /* 縮小圖示 */
+    font-size: 1.8rem; 
     color: #3a2c0f; 
-    margin-bottom: 3px; 
+    margin-bottom: 2px; /* 拉近距離 */
     line-height: 1; 
 }
 
-/* 文字 */
+/* 文字調整 */
 .gift-text { 
     font-family: var(--font-zh); 
-    font-size: 0.85rem; /* 縮小文字 */
+    font-size: 1rem; /* 字體加大 */
     color: #3a2c0f; 
     font-weight: 700; 
     line-height: 1.1; 
-    white-space: nowrap; 
+    white-space: nowrap; /* 確保不換行 */
 }
 
-/* 選單：RWD自動調整大小，使用 vw 單位 */
+/* 選單：RWD自動調整寬度 */
 .gift-menu {
     position: absolute; 
-    bottom: 120px; /* 向上推 */
+    bottom: 120px; /* 向上推，避免蓋住按鈕 */
     right: 0;
     
-    /* ★★★ 修正點：使用 vw 單位，隨視窗大小自動縮放 ★★★ */
-    width: 20vw; /* 寬度佔視窗 20% */
-    min-width: 260px; /* 最小寬度保障 */
-    max-width: 400px;
+    /* ★ 修正點：電腦版使用視窗比例寬度 (Responsive Width) */
+    width: 18vw; 
+    min-width: 250px; 
+    max-width: 350px;
     
-    /* 高度自動，若內容太多則出現卷軸 */
-    max-height: 60vh; /* 最多佔視窗高度 60% */
-    overflow-y: auto; /* 超出則滾動 */
-    
-    background: rgba(10, 10, 10, 0.98);
+    background: rgba(20, 20, 20, 0.98);
     backdrop-filter: blur(10px); 
     border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 8px; padding: 1.5vw; /* 內距也隨視窗變 */
+    border-radius: 8px; padding: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     
     /* 顯示控制 */
     opacity: 0; 
-    pointer-events: none;
+    pointer-events: none; /* 隱藏時點不到 */
     transform: translateY(20px) scale(0.95);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 10000;
@@ -225,28 +207,30 @@ header {
 
 .gift-header {
     display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1); 
-    padding-bottom: 10px; margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;
 }
 
-/* 選單標題 RWD 字體 */
+/* 標題字體隨視窗調整 */
 .gift-header h3 { 
     font-family: var(--font-zh); 
-    font-size: clamp(1rem, 1.2vw, 1.5rem); /* 字體隨視窗變大 */
+    font-size: clamp(1rem, 1.2vw, 1.3rem); /* RWD Font Size */
     color: var(--gold-primary); margin: 0; 
 }
 .close-btn { color: #888; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
 .close-btn:hover { color: #fff; }
 
-.gift-list { margin: 0; padding: 0; }
+.gift-list { 
+    max-height: 60vh; /* 避免選單太長超出螢幕 */
+    overflow-y: auto; 
+}
 .gift-list li { margin-bottom: 0; }
 .gift-list a {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0.8vw 0.5vw; /* 間距隨視窗變 */
+    padding: 12px 10px; 
     
-    /* 選單列表 RWD 字體 */
+    /* 列表字體隨視窗調整 */
     font-family: var(--font-zh); 
-    font-size: clamp(0.85rem, 1vw, 1.1rem); /* 字體隨視窗變大 */
+    font-size: clamp(0.9rem, 1vw, 1.1rem); /* RWD Font Size */
     
     color: #ccc;
     border-bottom: 1px solid rgba(255,255,255,0.03); transition: 0.3s;
@@ -263,9 +247,8 @@ header {
     100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
 }
 
-/* ★★★ 手機版設定 (保持原樣，不縮小按鈕內容) ★★★ */
+/* ★★★ 手機版設定 (保持原樣或微調適配) ★★★ */
 @media screen and (max-width: 768px) {
-    /* 導航列 */
     .nav-links {
         position: absolute; right: 0; top: 0; height: 100vh; width: 100%;
         background: #000; flex-direction: column; justify-content: center;
@@ -284,20 +267,20 @@ header {
     .luxury-grid { grid-template-columns: 1fr; }
     .contact-buttons { flex-direction: column; gap: 15px; }
     
-    /* 手機版懸浮按鈕：恢復原樣，不縮小內容 */
+    /* 手機版懸浮按鈕：縮小回 70px，避免擋住畫面 */
     .gift-widget { bottom: 20px; right: 20px; }
     .gift-btn { width: 70px; height: 70px; }
-    .gift-content { transform: scale(1); } /* 手機版不縮小內容 */
     .gift-icon { font-size: 1.4rem; margin-bottom: 0; }
     .gift-text { font-size: 0.7rem; }
     
     /* 手機版選單：固定寬度 */
     .gift-menu { 
         bottom: 100px; 
-        width: 260px; 
-        min-width: auto; max-width: none;
-        right: 0; padding: 20px;
+        width: 260px; /* 手機版不走 VW，固定寬度較安全 */
+        min-width: auto; 
+        max-width: none;
+        right: 0; 
     }
     .gift-header h3 { font-size: 1rem; }
-    .gift-list a { font-size: 0.9rem; padding: 12px 10px; }
+    .gift-list a { font-size: 0.9rem; }
 }
