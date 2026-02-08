@@ -47,27 +47,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- ★★★ 懸浮視窗邏輯 (修正觸發問題) ★★★ ---
+    // --- ★★★ 懸浮視窗邏輯 ★★★ ---
     const giftBtn = document.getElementById('giftToggle');
     const giftMenu = document.getElementById('giftMenu');
     const giftClose = document.getElementById('giftClose');
 
     if (giftBtn && giftMenu) {
-        // 點擊按鈕：切換 active 狀態
         giftBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // 阻止事件冒泡
+            e.stopPropagation();
             giftMenu.classList.toggle('active');
         });
 
-        // 點擊關閉按鈕
         giftClose.addEventListener('click', (e) => {
             e.stopPropagation();
             giftMenu.classList.remove('active');
         });
 
-        // 點擊畫面空白處關閉
         document.addEventListener('click', (e) => {
-            // 如果點擊目標不是選單本身，也不是按鈕本身，就關閉
             if (!giftMenu.contains(e.target) && !giftBtn.contains(e.target)) {
                 giftMenu.classList.remove('active');
             }
