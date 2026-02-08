@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 導航列功能 ---
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 滾動淡入動畫 ---
+    // 滾動淡入動畫
     const faders = document.querySelectorAll('.fade-in');
     const appearOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
     const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
@@ -48,27 +47,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- ★★★ 送禮指南懸浮視窗 (Gift Guide) ★★★ ---
+    // --- ★★★ 懸浮視窗邏輯 (修正觸發問題) ★★★ ---
     const giftBtn = document.getElementById('giftToggle');
     const giftMenu = document.getElementById('giftMenu');
     const giftClose = document.getElementById('giftClose');
 
     if (giftBtn && giftMenu) {
-        // 點擊圓形按鈕：切換選單顯示/隱藏
+        // 點擊按鈕：切換 active 狀態
         giftBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // 防止點擊穿透
+            e.stopPropagation(); // 阻止事件冒泡
             giftMenu.classList.toggle('active');
         });
 
-        // 點擊選單右上角的 X：關閉選單
+        // 點擊關閉按鈕
         giftClose.addEventListener('click', (e) => {
             e.stopPropagation();
             giftMenu.classList.remove('active');
         });
 
-        // 點擊畫面空白處：自動關閉選單
+        // 點擊畫面空白處關閉
         document.addEventListener('click', (e) => {
-            // 如果點擊的地方既不是選單，也不是按鈕，就關閉
+            // 如果點擊目標不是選單本身，也不是按鈕本身，就關閉
             if (!giftMenu.contains(e.target) && !giftBtn.contains(e.target)) {
                 giftMenu.classList.remove('active');
             }
