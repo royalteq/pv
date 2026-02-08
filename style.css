@@ -93,13 +93,14 @@ header {
 .marquee-content span { margin: 0 30px; }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* --- 內容區塊 --- */
+/* --- 品牌哲學 --- */
 .about-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
 .img-frame { border: 1px solid rgba(212, 175, 55, 0.3); padding: 15px; }
 .img-placeholder { height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: var(--font-royal); font-size: 1.5rem; }
 .section-heading { font-family: var(--font-zh); font-size: 3rem; margin-bottom: 40px; line-height: 1.3; }
 .text-body { color: var(--text-grey); font-size: 1.05rem; line-height: 2; margin-bottom: 40px; text-align: justify; }
 
+/* --- 產品展示 --- */
 .section-header { text-align: center; margin-bottom: 80px; }
 .section-subtitle { display: block; font-family: var(--font-modern); font-size: 0.8rem; letter-spacing: 4px; color: var(--gold-primary); margin-bottom: 15px; }
 .luxury-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
@@ -115,6 +116,7 @@ header {
 .luxury-card:hover .card-overlay { opacity: 1; }
 .card-info { padding-top: 25px; text-align: center; }
 
+/* --- 客製化/聯絡/頁尾 --- */
 .gold-icon { font-size: 2.5rem; color: var(--gold-primary); margin-bottom: 20px; }
 .bespoke-sub { font-family: var(--font-zh); font-size: 2rem; color: #fff; margin-bottom: 30px; font-weight: 300; }
 .bespoke-text { color: #aaa; margin-bottom: 50px; line-height: 2; }
@@ -127,92 +129,117 @@ header {
 .luxury-footer { background-color: #050505; padding: 100px 0 50px; text-align: center; border-top: 1px solid #1a1a1a; }
 .footer-logo { font-family: var(--font-royal); font-size: 2rem; color: #fff; letter-spacing: 3px; margin-bottom: 10px; }
 
+/* --- 動畫 --- */
 .fade-in { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
 /* --- ★★★ 送禮指南懸浮視窗 (修正版) ★★★ --- */
 .gift-widget {
-    position: fixed; 
-    bottom: 30px; 
-    right: 30px; 
-    z-index: 9999; /* 確保在最上層 */
+    position: fixed; bottom: 30px; right: 30px; z-index: 10000; /* 確保在最上層 */
 }
 
-/* 懸浮按鈕：加大尺寸 */
+/* 懸浮按鈕：加大尺寸與集中內容 */
 .gift-btn {
-    width: 100px; height: 100px; /* 加大到 100px */
+    width: 100px; height: 100px; /* 加大尺寸 */
     border-radius: 50%;
     background: var(--gold-gradient);
     border: none; cursor: pointer;
     box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    
+    /* ★ 修正點：使用 Flexbox 強制置中並消除間隙 */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    padding: 0; /* 清除內距，避免擠壓 */
+    
     transition: all 0.3s ease;
     animation: pulse-gold 2s infinite;
-    position: relative;
-    z-index: 10000; /* 確保按鈕本身好點擊 */
+    z-index: 10001; /* 比選單高一層 */
 }
 
-.gift-btn:hover { transform: scale(1.05); box-shadow: 0 6px 25px rgba(212, 175, 55, 0.7); }
+.gift-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6); }
 
-.gift-icon { font-size: 1.8rem; color: #3a2c0f; margin-bottom: 5px; }
+/* 圖示調整 */
+.gift-icon { 
+    font-size: 1.8rem; 
+    color: #3a2c0f; 
+    margin-bottom: 2px; /* 拉近距離 */
+    line-height: 1; 
+}
+
+/* 文字調整 */
 .gift-text { 
     font-family: var(--font-zh); 
-    font-size: 0.9rem; /* 字體加大 */
+    font-size: 1rem; /* 字體加大 */
     color: #3a2c0f; 
     font-weight: 700; 
-    line-height: 1.2;
-    white-space: nowrap; /* 強制不換行 */
+    line-height: 1.1; 
+    white-space: nowrap; /* 確保不換行 */
 }
 
-/* 展開的選單 */
+/* 選單：RWD自動調整寬度 */
 .gift-menu {
     position: absolute; 
-    bottom: 130px; /* 往上推，避開 100px 的按鈕 */
+    bottom: 120px; /* 向上推，避免蓋住按鈕 */
     right: 0;
-    width: 280px; 
-    background: rgba(10, 10, 10, 0.98); /* 不透明度提高 */
-    backdrop-filter: blur(10px); 
-    border: 1px solid rgba(212, 175, 55, 0.5);
-    border-radius: 8px; padding: 20px;
-    box-shadow: 0 10px 50px rgba(0,0,0,0.8);
     
-    /* 顯示/隱藏控制 */
-    display: block; /* 預設為 block 但用 opacity 隱藏，方便動畫 */
+    /* ★ 修正點：電腦版使用視窗比例寬度 (Responsive Width) */
+    width: 18vw; 
+    min-width: 250px; 
+    max-width: 350px;
+    
+    background: rgba(20, 20, 20, 0.98);
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 8px; padding: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    
+    /* 顯示控制 */
     opacity: 0; 
-    pointer-events: none; /* 隱藏時不可點擊 */
-    transform: translateY(20px) scale(0.9);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 9998;
+    pointer-events: none; /* 隱藏時點不到 */
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10000;
 }
 
-/* 啟用狀態 */
-.gift-menu.active { 
-    opacity: 1; 
-    pointer-events: auto; 
-    transform: translateY(0) scale(1); 
-}
+.gift-menu.active { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
 
 .gift-header {
     display: flex; justify-content: space-between; align-items: center;
     border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;
 }
 
-.gift-header h3 { font-family: var(--font-zh); font-size: 1.1rem; color: var(--gold-primary); margin: 0; }
-.close-btn { color: #888; cursor: pointer; font-size: 1.5rem; transition: 0.3s; }
+/* 標題字體隨視窗調整 */
+.gift-header h3 { 
+    font-family: var(--font-zh); 
+    font-size: clamp(1rem, 1.2vw, 1.3rem); /* RWD Font Size */
+    color: var(--gold-primary); margin: 0; 
+}
+.close-btn { color: #888; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
 .close-btn:hover { color: #fff; }
 
-.gift-list { max-height: 400px; overflow-y: auto; }
+.gift-list { 
+    max-height: 60vh; /* 避免選單太長超出螢幕 */
+    overflow-y: auto; 
+}
 .gift-list li { margin-bottom: 0; }
 .gift-list a {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 10px; font-family: var(--font-zh); font-size: 0.95rem; color: #ccc;
-    border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+    padding: 12px 10px; 
+    
+    /* 列表字體隨視窗調整 */
+    font-family: var(--font-zh); 
+    font-size: clamp(0.9rem, 1vw, 1.1rem); /* RWD Font Size */
+    
+    color: #ccc;
+    border-bottom: 1px solid rgba(255,255,255,0.03); transition: 0.3s;
 }
 
 .gift-list a:hover {
-    color: var(--gold-primary); background: rgba(255,255,255,0.05); padding-left: 15px;
+    color: var(--gold-primary); background: rgba(255,255,255,0.03); padding-left: 15px;
 }
-.gift-list a i { font-size: 0.8rem; opacity: 0.5; }
+.gift-list a i { font-size: 0.8em; opacity: 0.5; }
 
 @keyframes pulse-gold {
     0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
@@ -220,7 +247,7 @@ header {
     100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
 }
 
-/* RWD */
+/* ★★★ 手機版設定 (保持原樣或微調適配) ★★★ */
 @media screen and (max-width: 768px) {
     .nav-links {
         position: absolute; right: 0; top: 0; height: 100vh; width: 100%;
@@ -228,6 +255,8 @@ header {
         transform: translateX(100%); transition: 0.4s;
     }
     .nav-links li { margin: 25px 0; margin-left: 0; }
+    .nav-en { font-size: 1.2rem; margin-bottom: 5px; }
+    .nav-zh { font-size: 0.9rem; color: var(--gold-primary); }
     .nav-active { transform: translateX(0); }
     .burger { display: block; position: relative; z-index: 1001; }
     
@@ -238,10 +267,20 @@ header {
     .luxury-grid { grid-template-columns: 1fr; }
     .contact-buttons { flex-direction: column; gap: 15px; }
     
-    /* 手機版按鈕縮小一點，避免擋住太多內容 */
+    /* 手機版懸浮按鈕：縮小回 70px，避免擋住畫面 */
     .gift-widget { bottom: 20px; right: 20px; }
     .gift-btn { width: 70px; height: 70px; }
-    .gift-icon { font-size: 1.4rem; }
+    .gift-icon { font-size: 1.4rem; margin-bottom: 0; }
     .gift-text { font-size: 0.7rem; }
-    .gift-menu { bottom: 100px; width: 260px; right: -10px; }
+    
+    /* 手機版選單：固定寬度 */
+    .gift-menu { 
+        bottom: 100px; 
+        width: 260px; /* 手機版不走 VW，固定寬度較安全 */
+        min-width: auto; 
+        max-width: none;
+        right: 0; 
+    }
+    .gift-header h3 { font-size: 1rem; }
+    .gift-list a { font-size: 0.9rem; }
 }
