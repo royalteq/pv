@@ -3,130 +3,683 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SEO: 網頁標題與描述 -->
-    <title>FoldWay 可折疊大容量旅行包｜捨棄笨重行李箱，出遊這咖就夠 - 逸沐生活選物</title>
-    <meta name="description" content="別再推著笨重半空的行李箱出門！逸沐 FoldWay 擁有超大容量與內建耐磨滾輪，裝滿也能像行李箱一樣輕鬆拖著走。週末微旅行、出國血拼，買這一個就夠了。">
-    <meta name="keywords" content="FoldWay, 取代行李箱, 大容量旅行袋, 附滾輪旅行包, 出國必備, 逸沐生活選物, 質感旅行配件">
+    <title>FoldGo 可折疊大容量旅行包｜捨棄笨重行李箱，出遊這咖就夠 - 亦沐生活選物</title>
+    <meta name="description" content="別再推著笨重、硬殼的行李箱出門！亦沐 FoldGo 擁有超大容量與內建耐磨滾輪，裝滿也能像行李箱一樣輕鬆拖著走。週末微旅行、出國血拼，買這個就夠了。">
+    <meta name="keywords" content="FoldGo, 取代行李箱, 大容量旅行袋, 附滾輪旅行包, 出國必備, 亦沐生活選物, 質感旅行配件">
     
-    <link rel="stylesheet" href="style.css">
-    <!-- 引入 Google 字體提升質感 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           CSS 基礎設定與變數
+           ========================================= */
+        :root {
+            --primary-color: #2c3e50; 
+            --accent-color: #d4a373; 
+            --text-color: #333333;
+            --text-light: #555555;
+            --bg-color: #faf9f8; 
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.7; 
+            overflow-x: hidden;
+            scroll-behavior: smooth; 
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        strong {
+            color: var(--primary-color);
+            font-weight: 700;
+            background: linear-gradient(transparent 60%, rgba(212, 163, 115, 0.3) 40%); 
+        }
+
+        .pen-underline {
+            background: linear-gradient(transparent 65%, rgba(212, 163, 115, 0.45) 35%);
+            font-weight: 700;
+            color: var(--primary-color);
+            padding: 0 2px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--white);
+            color: var(--primary-color);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transform: translateY(-2px); 
+        }
+
+        .btn-large {
+            padding: 16px 48px;
+            font-size: 1.15rem;
+            margin-top: 25px;
+            width: 100%; 
+            max-width: 360px;
+        }
+
+        /* =========================================
+           頁首導覽列
+           ========================================= */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background-color: rgba(250, 249, 248, 0.98);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            margin-left: 25px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-btn {
+            border: 1.5px solid var(--primary-color);
+            padding: 8px 18px;
+            border-radius: 4px;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--white) !important;
+        }
+
+        /* =========================================
+           首屏視覺 (Hero)
+           ========================================= */
+        .hero {
+            position: relative;
+            height: 90vh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 70px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #f5f5f5; 
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9; 
+        }
+
+        .hero-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px); 
+            padding: 50px 40px;
+            max-width: 700px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .hero-content h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-bottom: 35px;
+        }
+
+        /* =========================================
+           變身對比區塊
+           ========================================= */
+        .editorial {
+            padding: 100px 5% 120px; 
+            background-color: var(--white); 
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .section-title p {
+            color: var(--accent-color);
+            font-weight: 500;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .editorial-story {
+            display: flex;
+            flex-direction: column;
+            gap: 80px; 
+        }
+
+        .story-block {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap; 
+        }
+
+        .story-before .story-img,
+        .story-after .story-img {
+            flex: 1;
+            background-color: transparent; 
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        .story-before .story-img img,
+        .story-after .story-img img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+
+        .story-before .story-text,
+        .story-after .story-text {
+            flex: 1;
+        }
+
+        .story-before .story-text h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .story-after {
+            flex-direction: row-reverse; 
+        }
+
+        .story-after .story-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        /* =========================================
+           機能美學拆解 (Bento Box Grid)
+           ========================================= */
+        .features {
+            padding: 90px 5%;
+            background-color: var(--bg-color);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .bento-card {
+            background: var(--white);
+            border-radius: 20px; 
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+
+        .bento-card:nth-child(1) { grid-column: span 2; } 
+        .bento-card:nth-child(2) { grid-column: span 1; } 
+        .bento-card:nth-child(3) { grid-column: span 1; } 
+        .bento-card:nth-child(4) { grid-column: span 2; } 
+
+        .bento-card img {
+            width: 100%;
+            height: auto;
+            background-color: transparent; 
+            padding: 0; 
+            margin-top: 20px;
+            display: block;
+        }
+
+        .bento-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .bento-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .bento-content p {
+            color: var(--text-light);
+            font-size: 1.05rem;
+        }
+
+        /* =========================================
+           結語與底部區塊
+           ========================================= */
+        .upcoming {
+            position: relative;
+            padding: 120px 5%;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .upcoming-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #1a2228; 
+        }
+
+        .upcoming-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.25; 
+        }
+
+        .upcoming-content {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .upcoming-content h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+        }
+
+        .upcoming-content p {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+        }
+
+        .final-cta {
+            text-align: center;
+            padding: 100px 5%;
+            background-color: var(--white);
+        }
+
+        .final-cta h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .final-cta p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            background-color: #111;
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        /* =========================================
+           ★ 手機版視覺全面優化 (Mobile First) ★
+           ========================================= */
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px 5%;
+                flex-wrap: wrap;
+            }
+            .logo {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+                font-size: 1.3rem;
+            }
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                gap: 12px;
+            }
+            .nav-links a {
+                margin: 0;
+                font-size: 0.9rem;
+            }
+            .nav-btn {
+                padding: 6px 14px;
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                height: 100vh; 
+                padding-top: 90px;
+            }
+            .hero-content {
+                padding: 30px 20px;
+                margin: 0 15px;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.92);
+            }
+            .hero-content h1 {
+                font-size: 1.7rem;
+                line-height: 1.4;
+                margin-bottom: 15px;
+            }
+            .hero-content p {
+                font-size: 1rem;
+                margin-bottom: 25px;
+            }
+
+            .editorial {
+                padding: 70px 5%;
+            }
+            .section-title h2 {
+                font-size: 1.6rem;
+                line-height: 1.4;
+            }
+            .editorial-story {
+                gap: 50px; 
+            }
+            .story-block {
+                flex-direction: column; 
+                gap: 25px;
+            }
+            .story-after {
+                flex-direction: column; 
+            }
+            .story-before .story-text h3 {
+                font-size: 1.4rem;
+            }
+            .story-after .story-text h3 {
+                font-size: 1.5rem;
+            }
+            
+            .features {
+                padding: 70px 5%;
+            }
+            .bento-grid {
+                grid-template-columns: 1fr; 
+                gap: 25px;
+            }
+            .bento-card:nth-child(n) {
+                grid-column: span 1; 
+            }
+            
+            .bento-card img {
+                height: auto;
+                max-height: none; 
+                width: 100%;
+            }
+            
+            .bento-content {
+                padding: 20px;
+            }
+            .bento-content h3 {
+                font-size: 1.3rem;
+            }
+            .bento-content p {
+                font-size: 0.95rem;
+            }
+
+            .upcoming {
+                padding: 80px 5%;
+            }
+            .upcoming-content h2 {
+                font-size: 1.6rem;
+            }
+            .upcoming-content p {
+                font-size: 1rem;
+            }
+            
+            .final-cta {
+                padding: 70px 5%;
+            }
+            .final-cta h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* 滾動動畫效果 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
 
-    <!-- 頂部導覽列 -->
     <header class="header">
-        <div class="logo">逸沐生活選物</div>
+        <div class="logo">亦沐生活選物</div>
         <nav class="nav-links">
-            <a href="#features">探索 FoldWay</a>
+            <a href="#features">探索 FoldGo</a>
             <a href="#upcoming">選品預告</a>
-            <a href="https://www.zeczec.com/projects/foldway" class="nav-btn">立即預購</a>
+            <a href="#cta" class="nav-btn">立即預購</a>
         </nav>
     </header>
 
     <main>
-        <!-- 首屏視覺區塊 (Hero Section) -->
         <section class="hero">
             <div class="hero-bg">
-                <img src="" alt="FoldWay 附滾輪大容量旅行包 拖行示範">
+                <img src="https://royaltech.com.tw/images/foldway/holdway_1.png" alt="FoldGo 附滾輪大容量旅行包 拖行示範">
             </div>
             <div class="hero-content reveal">
                 <h1>捨棄笨重行李箱，<br>輕裝出遊這咖就夠。</h1>
-                <!-- 筆記畫線與逗號 -->
-                <p><span class="pen-underline">逸沐 FoldWay 可折疊大容量旅行包，</span>擁有 66 公分魔術大空間，底部更配備內建滾輪。裝滿戰利品也能優雅拖著走，徹底釋放您的雙手與肩膀。</p>
-                <a href="https://www.zeczec.com/projects/foldway" class="btn btn-primary">看預購優惠</a>
+                <p><span class="pen-underline">亦沐 FoldGo 可折疊大容量旅行包，</span>擁有 66 公分魔術大空間，底部內建耐磨滾輪。裝滿戰利品後，也能優雅拖著走，徹底釋放您的雙手與肩膀。</p>
+                <a href="#cta" class="btn btn-primary">看預購優惠</a>
             </div>
         </section>
 
-        <!-- 情境痛點切入 (Transformation: Before & After 自己變身對比) -->
         <section id="transformation" class="editorial container reveal">
             <div class="section-title reveal">
-                <h2>捨棄笨重、硬殼空箱，您需要的是能「隨時變身」的聰明配件。</h2>
+                <h2>捨棄笨重空箱，您需要的是能「隨時變身」的聰明裝備。</h2>
                 <p>BEFORE & AFTER</p>
             </div>
 
             <div class="editorial-story">
-                <!-- 變身前 (Before) -->
                 <div class="story-block story-before reveal">
-                    <div class="story-img">
-                        <img src="https://royaltech.com.tw/images/foldway/holdway_2.JPG" alt="FoldWay 摺疊成公事包大小 輕裝出發">
-                    </div>
                     <div class="story-text">
-                        <h3>出發：告別空箱的笨重，以「公事包」尺寸輕巧起步</h3>
-                        <p>傳統硬殼行李箱最麻煩的，就是明明沒裝什麼，出門卻還是得推著一個大笨箱。FoldWay 完美解決這個痛點，出發時折成公事包大小，手提、肩背都俐落；經過窄巷或沒電梯的民宿，上下樓梯更是輕鬆自如，完全不拖泥帶水。</p>
+                        <h3>出發：告別笨重的空箱子，以「公事包」輕巧起步、一折就走</h3>
+                        <p>傳統硬殼行李箱最麻煩的是明明沒裝什麼，出門還是得推著一個大笨箱出門。FoldGo 完美解決這個痛點，出門就像是背著公事包，自由進出窄巷、民宿，上、下樓梯更是輕鬆隨性。</p>
+                    </div>
+                    <div class="story-img">
+                        <img src="https://royaltech.com.tw/images/foldway/holdway_2.JPG" alt="FoldGo 摺疊成公事包大小 輕裝出發" loading="lazy">
                     </div>
                 </div>
 
-                <!-- 變身後 (After) -->
                 <div class="story-block story-after reveal">
-                    <div class="story-img">
-                        <img src="https://royaltech.com.tw/images/foldway/holdway_3.jpg" alt="FoldWay 展開後超大容量 附內建滾輪拖行">
-                    </div>
                     <div class="story-text">
-                        <h3>回程：釋放 66 公分巨容量，裝滿戰利品直接拖著走</h3>
-                        <p>遇到需要大採買的行程也完全不用怕！瞬間展開變身超大容量旅行包，秋冬衣物、伴手禮通通吃下。最厲害的是底部「內建耐磨滾輪」，裝滿後只要傾斜就能像行李箱一樣優雅拖著走，再也不用狼狽硬扛，出遊帶上這一咖就完美取代笨重行李箱。</p>
+                        <h3>回程：釋放 66 公分超大容量，裝滿戰利品直接拖著走</h3>
+                        <p>遇到採購行程，完全不用怕！瞬間展開，就變身超大容量旅行包，秋冬衣物、伴手禮通通裝得下。最厲害的是底部內建「耐磨滾輪」，裝滿戰利品後，只要傾斜，就變身行李箱，優雅拖著走，再也不用狼狽硬扛，出遊帶上這一咖，完美取代大笨箱。</p>
+                    </div>
+                    <div class="story-img">
+                        <img src="https://royaltech.com.tw/images/foldway/holdway_3.jpg" alt="FoldGo 展開後超大容量 內建滾輪拖行特寫" loading="lazy">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 機能美學拆解 (Feature Grid) -->
         <section id="features" class="features container">
             <div class="section-title reveal">
-                <h2>裝得下所有戰利品，更懂得幫你省力</h2>
+                <h2>裝得下戰利品，更懂得幫你省力</h2>
                 <p>DETAILS & FEATURES</p>
             </div>
-            <div class="grid">
-                <!-- 已修正為公事包大小 -->
-                <article class="card reveal">
-                    <img src="https://royaltech.com.tw/images/foldway/holdway_step.png" alt="極致收納輕鬆摺疊">
-                    <h3>極致收納，輕鬆摺疊</h3>
-                    <p>揮別空行李箱佔據房間角落的阿雜感。摺疊後僅約公事包大小，出發前攤開，快速釋放 66 公分超大裝載空間。</p>
+            <div class="bento-grid">
+                
+                <article class="bento-card reveal">
+                    <img src="https://royaltech.com.tw/images/foldway/holdway_step.png" alt="極致收納輕鬆摺疊" loading="lazy">
+                    <div class="bento-content">
+                        <h3>極致收納，輕鬆摺疊</h3>
+                        <p>揮別空行李箱佔據房間角落的阿雜感。摺疊後僅約公事包大小，出發前攤開，快速釋放 66 公分超大裝載空間。</p>
+                    </div>
                 </article>
-                <!-- 已修正為內建滾輪 -->
-                <article class="card reveal" style="transition-delay: 0.1s;">
-                    <img src="https://royaltech.com.tw/images/foldway/holdway_show.png" alt="內建滾輪拖行設計">
-                    <h3>內建滾輪，滿載也能優雅拖</h3>
-                    <p>誰說沒拉桿就不能拖？底部內建防刮耐磨滾輪，裝再重也能毫不費力地拖著走，再也不怕走到肩膀痠痛。</p>
+                
+                <article class="bento-card reveal" style="transition-delay: 0.1s;">
+                    <img src="https://royaltech.com.tw/images/foldway/holdway_show.png" alt="多種背法為旅行而生" loading="lazy">
+                    <div class="bento-content">
+                        <h3>多種背法，為旅行而生</h3>
+                        <p>單肩背、手提、拖行或雙人提，多種拿法適應各種旅程，隨時切換，俐落有型。</p>
+                    </div>
                 </article>
-                <article class="card reveal" style="transition-delay: 0.2s;">
-                    <img src="https://royaltech.com.tw/images/foldway/holdway_big.PNG" alt="大容量實用多隔層">
-                    <h3>狂塞也不怕，隔層超實用</h3>
-                    <p>15.6吋筆電、秋冬衣物、伴手禮通通吃下。貼心前置拉鍊與側邊網袋，過海關拿護照、手機不用再撈半天。</p>
+                
+                                <article class="bento-card reveal" style="transition-delay: 0.2s;">
+                    <img src="https://royaltech.com.tw/images/foldway/holdway_detail.png" alt="加厚肩帶與雙拉鍊細節" loading="lazy">
+                    <div class="bento-content">
+                        <h3>升級減壓設計，好背又可舒緩肩膀重量</h3>
+                        <p>爆買裝滿也不怕！特別加厚「減壓肩帶」分散重量，實測手提、肩背都相當舒適。搭配堅固雙拉鍊，開合滑順絕對不卡，出國狂買一樣能優雅帶著走！</p>
+                    </div>
                 </article>
-                <article class="card reveal" style="transition-delay: 0.3s;">
-                    <img src="https://royaltech.com.tw/images/foldway/holdway_detail.png" alt="防潑水材質與減壓背帶">
-                    <h3>耐刮耐磨防潑水，減壓好背</h3>
-                    <p>特殊機能布料，搭配加厚舒適的肩帶與堅固耐用的雙拉鍊。單肩背、單手提、推著滾輪走，多種拿法隨時切換，俐落有型。</p>
+
+                
+                <article class="bento-card reveal" style="transition-delay: 0.3s;">
+                    <img src="https://royaltech.com.tw/images/foldway/holdway_spec.png" alt="產品尺寸規格與材質" loading="lazy">
+                    <div class="bento-content">
+                        <h3>防潑水材質，魔術大空間</h3>
+                        <p>質感耐刮防潑水材質，僅重 1.05kg。寬 66 公分的巨無霸容量，輕鬆應付所有出遊採買需求。</p>
+                    </div>
                 </article>
+
             </div>
         </section>
 
-        <!-- 逸沐選物館預告 (Upcoming Selects) -->
         <section id="upcoming" class="upcoming reveal">
             <div class="upcoming-bg">
-                <img src="" alt="逸沐生活選物未來高質感選品">
+                <img src="https://royaltech.com.tw/images/foldway/holdway_2.JPG" alt="亦沐生活選物未來高質感選品" loading="lazy">
             </div>
             <div class="upcoming-content">
                 <h2>不只是旅行，更想照顧你的日常質感。</h2>
-                <p>逸沐生活選物，為你尋找兼具美感與實用性的生活所需。接下來，我們將帶來溫潤的手作配件、提升氛圍的天然晶石... 敬請期待。</p>
+                <p>亦沐生活選物，為你尋找兼具美感與實用性的生活提案。接下來，我們將帶來溫潤的手作皮革配件、提升空間氛圍的天然晶石擺設... 敬請期待。</p>
             </div>
         </section>
 
-        <!-- 底部導購與規格 (Footer & CTA) -->
         <section id="cta" class="final-cta container reveal">
             <div class="color-options">
-                <img src="" alt="FoldWay 經典黑、質感藍、森林綠">
+                <img src="" alt="FoldGo 經典黑、質感藍、森林綠" loading="lazy">
             </div>
             <h2>告別笨重，挑選你的專屬色系</h2>
             <p>經典黑 / 質感藍 / 森林綠・三色任選</p>
-            <a href="https://www.zeczec.com/projects/foldway" class="btn btn-primary btn-large" target="_blank" rel="noopener">立即前往預購</a>
+            <a href="您的實際結帳網址請貼在這裡" class="btn btn-primary btn-large" target="_blank" rel="noopener">立即前往預購</a>
         </section>
     </main>
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 逸沐生活選物 Yimu Lifestyle. All rights reserved.</p>
+            <p>&copy; 2026 亦沐生活選物 Yimu Lifestyle. All rights reserved.</p>
             <div class="social-links">
                 <a href="#" target="_blank" rel="noopener">Instagram</a>
                 <a href="#" target="_blank" rel="noopener">Facebook</a>
@@ -135,6 +688,49 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerOffset = 70;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                  
+                        window.scrollTo({
+                             top: offsetPosition,
+                             behavior: "smooth"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
