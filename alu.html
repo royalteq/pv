@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鋁材行動計算與報價系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-slate-100 p-4 md:p-8 font-sans text-slate-800">
+
+    <div class="max-w-lg mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-blue-600 p-4 text-white text-center">
+            <h1 class="text-2xl font-bold">鋁材重量與報價計算機</h1>
+            <p class="text-sm opacity-80 mt-1">支援一般、精抽、圓管與切短料</p>
+        </div>
+
+        <div class="p-6 space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">材料種類</label>
+                <select id="mat-type" class="w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" onchange="toggleFields()">
+                    <option value="round_general">圓條 (一般) - 預設外徑+0.2</option>
+                    <option value="round_precision">圓條 (精抽) - 實際外徑</option>
+                    <option value="tube">圓管 - 外徑+0.2計算</option>
+                    <option value="short_cut">切短料 (一般) - 長度自動+5mm損耗</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">尺寸/外徑 (mm)</label>
+                    <input type="number" id="mat-size" class="w-full border border-gray-300 rounded-lg p-3" placeholder="例如: 10">
+                </div>
+                <div id="inner-size-container" class="hidden">
+                    <label class="block text-sm font-medium mb-1">內徑 (mm)</label>
+                    <input type="number" id="mat-inner-size" class="w-full border border-gray-300 rounded-lg p-3" placeholder="例如: 12">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1" id="label-length">長度 (mm)</label>
+                    <input type="number" id="mat-length" class="w-full border border-gray-300 rounded-lg p-3" placeholder="例如: 1000">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">單價 (元/KG)</label>
+                    <input type="number" id="mat-price" class="w-full border border-gray-300 rounded-lg p-3" placeholder="例如: 150">
+                </div>
+            </div>
+
+            <button onclick="calculate()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 mt-4">
+                計算數值
+            </button>
+        </div>
+    </div>
+
+    <div id="quote-container" class="max-w-lg mx-auto mt-6 hidden">
+        <div id="pdf-content" class="bg-white p-8 rounded-xl shadow-md border-t-8 border-blue-600">
+            <div class="flex justify-between items-center border-b pb-4 mb-4">
+                <h2 class="text-2xl font-bold text-gray-800">鋁材報價單</h2>
+                <span id="out-date" class="text-sm text-gray-500"></span>
+            </div>
+            
+            <table class="w-full text-left mb-6 text-gray-700">
+                <tbody>
+                    <tr class="border-b"><th class="py-2 w-1/3">種類</th><td class="py-2" id="out-type"></td></tr>
+                    <tr class="border-b"><th class="py-2">外徑尺寸</th><td class="py-2"><span id="out-size"></span> mm</td></tr>
+                    <tr class="border-b hidden" id="out-inner-row"><th class="py-2">內徑尺寸</th><td class="py-2"><span id="out-inner"></span> mm</td></tr>
+                    <tr class="border-b"><th class="py-2">需求長度</th><td class="py-2"><span id="out-length"></span> <span id="out-length-note" class="text-xs text-red-500"></span></td></tr>
+                    <tr class="border-b"><th class="py-2">設定單價</th><td class="py-2"><span id="out-price"></span> 元/KG</td></tr>
+                </tbody>
+            </table>
+
+            <div class="bg-slate-50 p-4 rounded-lg">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-gray-600">預估重量</span>
+                    <span class="text-xl font-bold text-blue-700" id="out-weight"></span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600">總計金額</span>
+                    <span class="text-2xl font-bold text-red-600" id="out-total"></span>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="downloadPDF()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-lg transition duration-200 mt-4 flex justify-center items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            下載 PDF 報價單
+        </button>
+    </div>
+
+    <script>
+        // 根據選擇的材料種類切換輸入框
+        function toggleFields() {
+            const type = document.getElementById('mat-type').value;
+            const innerContainer = document.getElementById('inner-size-container');
+            const lengthLabel = document.getElementById('label-length');
+            
+            if (type === 'tube') {
+                innerContainer.classList.remove('hidden');
+            } else {
+                innerContainer.classList.add('hidden');
+                document.getElementById('mat-inner-size').value = '';
+            }
+
+            if (type === 'short_cut') {
+                lengthLabel.innerText = "切料長度 (mm) - 將自動+5";
+            } else {
+                lengthLabel.innerText = "長度 (mm)";
+            }
+        }
+
+        // 計算邏輯（完全依照 Excel 內的公式）
+        function calculate() {
+            const typeSelect = document.getElementById('mat-type');
+            const typeValue = typeSelect.value;
+            const typeText = typeSelect.options[typeSelect.selectedIndex].text.split(' - ')[0];
+            
+            const size = parseFloat(document.getElementById('mat-size').value) || 0;
+            const innerSize = parseFloat(document.getElementById('mat-inner-size').value) || 0;
+            const lengthInput = parseFloat(document.getElementById('mat-length').value) || 0;
+            const price = parseFloat(document.getElementById('mat-price').value) || 0;
+
+            if (size === 0 || lengthInput === 0) {
+                alert('請輸入正確的尺寸與長度數值！');
+                return;
+            }
+
+            let weight = 0;
+            let finalLength = lengthInput;
+            let lengthNote = "";
+            const constant = 0.785 * 0.00273; // Excel 中的常數 0.00214305
+
+            switch(typeValue) {
+                case 'round_general':
+                    // (尺寸+0.2)^2 * 0.785 * 0.00273 * (長度/1000)
+                    weight = Math.pow(size + 0.2, 2) * constant * (finalLength / 1000);
+                    break;
+                case 'round_precision':
+                    // 尺寸^2 * 0.785 * 0.00273 * (長度/1000)
+                    weight = Math.pow(size, 2) * constant * (finalLength / 1000);
+                    break;
+                case 'tube':
+                    // ((外徑+0.2)^2 - 內徑^2) * 0.785 * 0.00273 * (長度/1000)
+                    weight = (Math.pow(size + 0.2, 2) - Math.pow(innerSize, 2)) * constant * (finalLength / 1000);
+                    break;
+                case 'short_cut':
+                    // 切短料自動加 5mm 損耗 (例如 122L -> 127)
+                    finalLength = lengthInput + 5;
+                    weight = Math.pow(size + 0.2, 2) * constant * (finalLength / 1000);
+                    lengthNote = "(已含 5mm 切割損耗)";
+                    break;
+            }
+
+            const totalPrice = weight * price;
+
+            // 寫入報價單欄位
+            document.getElementById('out-date').innerText = new Date().toLocaleDateString('zh-TW');
+            document.getElementById('out-type').innerText = typeText;
+            document.getElementById('out-size').innerText = size;
+            
+            if (typeValue === 'tube') {
+                document.getElementById('out-inner-row').classList.remove('hidden');
+                document.getElementById('out-inner').innerText = innerSize;
+            } else {
+                document.getElementById('out-inner-row').classList.add('hidden');
+            }
+
+            document.getElementById('out-length').innerText = finalLength + " mm";
+            document.getElementById('out-length-note').innerText = lengthNote;
+            document.getElementById('out-price').innerText = price;
+            document.getElementById('out-weight').innerText = weight.toFixed(4) + " KG";
+            document.getElementById('out-total').innerText = Math.round(totalPrice).toLocaleString() + " 元"; // 總價四捨五入到整數
+
+            // 顯示報價單區塊
+            document.getElementById('quote-container').classList.remove('hidden');
+        }
+
+        // 匯出 PDF 功能
+        function downloadPDF() {
+            const element = document.getElementById('pdf-content');
+            const opt = {
+                margin:       0.5,
+                filename:     `鋁材報價單_${new Date().getTime()}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // 呼叫 html2pdf 進行轉換與下載
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
