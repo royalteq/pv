@@ -61,15 +61,28 @@
                 <span id="out-date" class="text-sm text-gray-500"></span>
             </div>
             
-            <table class="w-full text-left mb-6 text-gray-700">
-                <tbody>
-                    <tr class="border-b"><th class="py-2 w-1/3">種類</th><td class="py-2" id="out-type"></td></tr>
-                    <tr class="border-b"><th class="py-2">外徑尺寸</th><td class="py-2"><span id="out-size"></span> mm</td></tr>
-                    <tr class="border-b hidden" id="out-inner-row"><th class="py-2">內徑尺寸</th><td class="py-2"><span id="out-inner"></span> mm</td></tr>
-                    <tr class="border-b"><th class="py-2">需求長度</th><td class="py-2"><span id="out-length"></span> <span id="out-length-note" class="text-xs text-red-500"></span></td></tr>
-                    <tr class="border-b"><th class="py-2">設定單價</th><td class="py-2"><span id="out-price"></span> 元/KG</td></tr>
-                </tbody>
-            </table>
+            <div class="mb-6 text-gray-700">
+                <div class="flex border-b py-3">
+                    <div class="w-1/3 font-bold">種類</div>
+                    <div class="w-2/3" id="out-type"></div>
+                </div>
+                <div class="flex border-b py-3">
+                    <div class="w-1/3 font-bold">外徑尺寸</div>
+                    <div class="w-2/3"><span id="out-size"></span> mm</div>
+                </div>
+                <div class="flex border-b py-3 hidden" id="out-inner-row">
+                    <div class="w-1/3 font-bold">內徑尺寸</div>
+                    <div class="w-2/3"><span id="out-inner"></span> mm</div>
+                </div>
+                <div class="flex border-b py-3">
+                    <div class="w-1/3 font-bold">需求長度</div>
+                    <div class="w-2/3"><span id="out-length"></span> <span id="out-length-note" class="text-xs text-red-500"></span></div>
+                </div>
+                <div class="flex border-b py-3">
+                    <div class="w-1/3 font-bold">設定單價</div>
+                    <div class="w-2/3"><span id="out-price"></span> 元/KG</div>
+                </div>
+            </div>
 
             <div class="bg-slate-50 p-4 rounded-lg">
                 <div class="flex justify-between items-center mb-2">
@@ -144,7 +157,7 @@
                 case 'short_cut':
                     finalLength = lengthInput + 5;
                     weight = Math.pow(size + 0.2, 2) * constant * (finalLength / 1000);
-                    lengthNote = "(已含 5mm 切割損耗)";
+                    lengthNote = "(含5mm損耗)";
                     break;
             }
 
@@ -161,7 +174,7 @@
                 document.getElementById('out-inner-row').classList.add('hidden');
             }
 
-            document.getElementById('out-length').innerText = finalLength + " mm";
+            document.getElementById('out-length').innerText = finalLength;
             document.getElementById('out-length-note').innerText = lengthNote;
             document.getElementById('out-price').innerText = price;
             document.getElementById('out-weight').innerText = weight.toFixed(4) + " KG";
@@ -170,35 +183,51 @@
             document.getElementById('quote-container').classList.remove('hidden');
         }
 
-        // 升級版的 PDF 下載功能
+        // 取得 yyyymmddhhmm 格式的時間字串
+        function getFormattedDateString() {
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const hh = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes()).padStart(2, '0');
+            return `${yyyy}${mm}${dd}${hh}${min}`;
+        }
+
         function downloadPDF() {
             const element = document.getElementById('pdf-content');
             
-            // 1. 記錄目前的 CSS 狀態
+            // 記錄目前的 CSS 狀態
             const originalWidth = element.style.width;
             const originalMaxWidth = element.style.maxWidth;
+            const originalHeight = element.style.height;
             
-            // 2. 強制設定為固定像素寬度 (700px)，確保不被手機螢幕擠壓
+            // 強制展開寬度與高度，避免裁切
             element.style.width = '700px';
             element.style.maxWidth = '700px';
+            element.style.height = 'auto';
+
+            // 產生自訂檔名 (如：鋁材報價單_202604082013.pdf)
+            const fileName = `鋁材報價單_${getFormattedDateString()}.pdf`;
 
             const opt = {
                 margin:       0.5,
-                filename:     `鋁材報價單_${new Date().getTime()}.pdf`,
+                filename:     fileName,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { 
-                    scale: 2,           // 提高解析度
-                    scrollY: 0,         // 【關鍵修正】強制把 Y 軸歸零，避免往下捲動時截圖位移
-                    windowWidth: 800    // 【關鍵修正】給予虛擬視窗寬度
+                    scale: 2,           
+                    scrollY: 0,         
+                    windowWidth: 800,
+                    useCORS: true
                 },
                 jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
             };
             
-            // 3. 開始產出 PDF
             html2pdf().set(opt).from(element).save().then(() => {
-                // 4. PDF 存檔完成後，把寬度設定全部恢復，讓手機網頁恢復正常 RWD
+                // PDF 存檔完成後，恢復 RWD 狀態
                 element.style.width = originalWidth;
                 element.style.maxWidth = originalMaxWidth;
+                element.style.height = originalHeight;
             });
         }
     </script>
