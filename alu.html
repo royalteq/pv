@@ -55,68 +55,51 @@
     </div>
 
     <div id="quote-container" class="max-w-lg mx-auto mt-6 hidden">
-        <div class="bg-white p-6 rounded-xl shadow-md border-t-8 border-blue-600">
-            <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">計算結果預覽</h2>
+        <p class="text-xs text-gray-500 mb-2 text-center">💡 左右滑動可預覽完整表格，點擊下方按鈕即可下載標準 PDF</p>
+        
+        <div id="scroll-wrapper" class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200 mb-4">
             
-            <div class="space-y-2 text-gray-700 text-sm">
-                <div class="flex justify-between border-b pb-2"><span>種類</span><span id="ui-type" class="font-medium"></span></div>
-                <div class="flex justify-between border-b pb-2"><span>外徑</span><span class="font-medium"><span id="ui-size"></span> mm</span></div>
-                <div class="flex justify-between border-b pb-2 hidden" id="ui-inner-row"><span>內徑</span><span class="font-medium"><span id="ui-inner"></span> mm</span></div>
-                <div class="flex justify-between border-b pb-2"><span>長度</span><span class="font-medium"><span id="ui-length"></span> mm <span id="ui-length-note" class="text-xs text-red-500"></span></span></div>
-                <div class="flex justify-between border-b pb-2"><span>單價</span><span class="font-medium"><span id="ui-price"></span> 元</span></div>
-            </div>
+            <div id="pdf-export-content" style="width: 700px; padding: 40px; background-color: #ffffff; font-family: 'Microsoft JhengHei', sans-serif; box-sizing: border-box;">
+                <h2 style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 5px; color: #000;">鋁材報價單</h2>
+                <div style="text-align: right; margin-bottom: 15px; font-size: 14px; color: #333;">建立日期：<span id="pdf-date"></span></div>
 
-            <div class="mt-4 p-4 bg-slate-50 rounded-lg">
-                <div class="flex justify-between items-center mb-1">
-                    <span class="text-gray-600">重量</span>
-                    <span class="text-lg font-bold text-blue-700" id="ui-weight"></span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-600">總金額</span>
-                    <span class="text-xl font-bold text-red-600" id="ui-total"></span>
-                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 16px; color: #000; border: 2px solid #000;">
+                    <tr>
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #f3f4f6; width: 30%; text-align: center; font-weight: bold;">材料種類</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: center;" id="pdf-type"></td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #f3f4f6; text-align: center; font-weight: bold;">外徑尺寸</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: center;"><span id="pdf-size"></span> mm</td>
+                    </tr>
+                    <tr id="pdf-inner-row" style="display: none;">
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #f3f4f6; text-align: center; font-weight: bold;">內徑尺寸</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: center;"><span id="pdf-inner"></span> mm</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #f3f4f6; text-align: center; font-weight: bold;">需求長度</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: center;"><span id="pdf-length"></span> mm <span id="pdf-length-note" style="color: #dc2626; font-size: 12px;"></span></td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #f3f4f6; text-align: center; font-weight: bold;">設定單價</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: center;"><span id="pdf-price"></span> 元 / KG</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #e5e7eb; text-align: center; font-weight: bold;">預估重量</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: center; font-weight: bold; color: #1d4ed8;"><span id="pdf-weight"></span> KG</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #e5e7eb; text-align: center; font-weight: bold;">總計金額</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: center; font-weight: bold; color: #dc2626; font-size: 20px;"><span id="pdf-total"></span> 元</td>
+                    </tr>
+                </table>
             </div>
+            
         </div>
 
-        <button onclick="downloadPDF()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-lg transition duration-200 mt-4 flex justify-center items-center gap-2">
+        <button onclick="downloadPDF()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex justify-center items-center gap-2">
             下載正式 PDF 報價單
         </button>
-    </div>
-
-    <div id="pdf-export-wrapper" style="position: absolute; left: -9999px; top: 0; width: 800px; background-color: white; padding: 40px; font-family: 'Microsoft JhengHei', sans-serif;">
-        <h2 style="text-align: center; font-size: 32px; font-weight: bold; margin-bottom: 10px; color: #000;">鋁材報價單</h2>
-        <div style="text-align: right; margin-bottom: 20px; font-size: 16px; color: #333;">建立日期：<span id="pdf-date"></span></div>
-        
-        <table style="width: 100%; border-collapse: collapse; font-size: 18px; color: #000;">
-            <tr>
-                <th style="border: 1px solid #000; padding: 15px; background-color: #f3f4f6; width: 30%; text-align: left;">材料種類</th>
-                <td style="border: 1px solid #000; padding: 15px;" id="pdf-type"></td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid #000; padding: 15px; background-color: #f3f4f6; text-align: left;">外徑尺寸</th>
-                <td style="border: 1px solid #000; padding: 15px;"><span id="pdf-size"></span> mm</td>
-            </tr>
-            <tr id="pdf-inner-row" style="display: none;">
-                <th style="border: 1px solid #000; padding: 15px; background-color: #f3f4f6; text-align: left;">內徑尺寸</th>
-                <td style="border: 1px solid #000; padding: 15px;"><span id="pdf-inner"></span> mm</td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid #000; padding: 15px; background-color: #f3f4f6; text-align: left;">需求長度</th>
-                <td style="border: 1px solid #000; padding: 15px;"><span id="pdf-length"></span> mm <span id="pdf-length-note" style="color: #dc2626; font-size: 14px;"></span></td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid #000; padding: 15px; background-color: #f3f4f6; text-align: left;">設定單價</th>
-                <td style="border: 1px solid #000; padding: 15px;"><span id="pdf-price"></span> 元 / KG</td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid #000; padding: 15px; background-color: #e5e7eb; text-align: left; font-weight: bold;">預估重量</th>
-                <td style="border: 1px solid #000; padding: 15px; font-weight: bold; color: #1d4ed8;"><span id="pdf-weight"></span> KG</td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid #000; padding: 15px; background-color: #e5e7eb; text-align: left; font-weight: bold;">總計金額</th>
-                <td style="border: 1px solid #000; padding: 15px; font-weight: bold; color: #dc2626; font-size: 24px;"><span id="pdf-total"></span> 元</td>
-            </tr>
-        </table>
     </div>
 
     <script>
@@ -172,40 +155,21 @@
                 case 'short_cut':
                     finalLength = lengthInput + 5;
                     weight = Math.pow(size + 0.2, 2) * constant * (finalLength / 1000);
-                    lengthNote = "(含5mm損耗)";
+                    lengthNote = "(含 5mm 切割損耗)";
                     break;
             }
 
             const totalPrice = weight * price;
-            const formattedTotal = Math.round(totalPrice).toLocaleString();
-            const formattedWeight = weight.toFixed(4);
-            const currentDate = new Date().toLocaleDateString('zh-TW');
 
-            // 1. 寫入網頁預覽 UI
-            document.getElementById('ui-type').innerText = typeText;
-            document.getElementById('ui-size').innerText = size;
-            document.getElementById('ui-length').innerText = finalLength;
-            document.getElementById('ui-length-note').innerText = lengthNote;
-            document.getElementById('ui-price').innerText = price;
-            document.getElementById('ui-weight').innerText = formattedWeight + " KG";
-            document.getElementById('ui-total').innerText = formattedTotal + " 元";
-
-            if (typeValue === 'tube') {
-                document.getElementById('ui-inner-row').classList.remove('hidden');
-                document.getElementById('ui-inner').innerText = innerSize;
-            } else {
-                document.getElementById('ui-inner-row').classList.add('hidden');
-            }
-
-            // 2. 寫入 PDF 專用隱藏表格
-            document.getElementById('pdf-date').innerText = currentDate;
+            // 寫入 PDF 表格
+            document.getElementById('pdf-date').innerText = new Date().toLocaleDateString('zh-TW');
             document.getElementById('pdf-type').innerText = typeText;
             document.getElementById('pdf-size').innerText = size;
             document.getElementById('pdf-length').innerText = finalLength;
             document.getElementById('pdf-length-note').innerText = lengthNote;
             document.getElementById('pdf-price').innerText = price;
-            document.getElementById('pdf-weight').innerText = formattedWeight;
-            document.getElementById('pdf-total').innerText = formattedTotal;
+            document.getElementById('pdf-weight').innerText = weight.toFixed(4);
+            document.getElementById('pdf-total').innerText = Math.round(totalPrice).toLocaleString();
 
             if (typeValue === 'tube') {
                 document.getElementById('pdf-inner-row').style.display = 'table-row';
@@ -214,7 +178,7 @@
                 document.getElementById('pdf-inner-row').style.display = 'none';
             }
 
-            // 顯示預覽與下載按鈕
+            // 顯示預覽區塊
             document.getElementById('quote-container').classList.remove('hidden');
         }
 
@@ -228,23 +192,31 @@
             return `${yyyy}${mm}${dd}${hh}${min}`;
         }
 
-        // 下載 PDF (直接對隱藏的完美表格進行截圖)
         function downloadPDF() {
-            const element = document.getElementById('pdf-export-wrapper');
-            const fileName = `鋁材報價單_${getFormattedDateString()}.pdf`;
+            const wrapper = document.getElementById('scroll-wrapper');
+            const element = document.getElementById('pdf-export-content');
+            
+            // 【重要】在轉換 PDF 瞬間，暫時取消滾動屬性，防止截圖被腰斬
+            const originalOverflow = wrapper.style.overflowX;
+            wrapper.style.overflowX = 'visible';
 
+            const fileName = `鋁材報價單_${getFormattedDateString()}.pdf`;
             const opt = {
-                margin:       0.5,
+                margin:       [0.5, 0.5, 0.5, 0.5], // 上右下左邊界
                 filename:     fileName,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { 
                     scale: 2,           
-                    useCORS: true
+                    useCORS: true,
+                    scrollY: 0
                 },
                 jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
             };
             
-            html2pdf().set(opt).from(element).save();
+            html2pdf().set(opt).from(element).save().then(() => {
+                // PDF 下載完成後，恢復滾動屬性
+                wrapper.style.overflowX = originalOverflow;
+            });
         }
     </script>
 </body>
