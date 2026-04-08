@@ -183,7 +183,6 @@
             document.getElementById('quote-container').classList.remove('hidden');
         }
 
-        // 取得 yyyymmddhhmm 格式的時間字串
         function getFormattedDateString() {
             const now = new Date();
             const yyyy = now.getFullYear();
@@ -194,41 +193,34 @@
             return `${yyyy}${mm}${dd}${hh}${min}`;
         }
 
+        // 終極完美版 PDF 產出邏輯
         function downloadPDF() {
             const element = document.getElementById('pdf-content');
-            
-            // 記錄目前的 CSS 狀態
-            const originalWidth = element.style.width;
-            const originalMaxWidth = element.style.maxWidth;
-            const originalHeight = element.style.height;
-            
-            // 強制展開寬度與高度，避免裁切
-            element.style.width = '700px';
-            element.style.maxWidth = '700px';
-            element.style.height = 'auto';
-
-            // 產生自訂檔名 (如：鋁材報價單_202604082013.pdf)
             const fileName = `鋁材報價單_${getFormattedDateString()}.pdf`;
 
             const opt = {
-                margin:       0.5,
+                margin:       [0.5, 0.5, 0.5, 0.5], // 上左下右邊界
                 filename:     fileName,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { 
                     scale: 2,           
-                    scrollY: 0,         
-                    windowWidth: 800,
-                    useCORS: true
+                    useCORS: true,
+                    windowWidth: 800, // 強制模擬電腦版視窗寬度 800px
+                    width: 800,       // 強制畫布擷取寬度為 800px，避免右邊被裁切
+                    onclone: function (clonedDoc) {
+                        // 這個 onclone 函數會在背景偷偷執行，不會影響您正在看的手機畫面
+                        const pdfNode = clonedDoc.getElementById('pdf-content');
+                        // 在背景中強制把報價單展開成 750px 寬，確保排版完美
+                        pdfNode.style.width = '750px';
+                        pdfNode.style.maxWidth = '750px';
+                        pdfNode.style.margin = '0 auto';
+                    }
                 },
                 jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
             };
             
-            html2pdf().set(opt).from(element).save().then(() => {
-                // PDF 存檔完成後，恢復 RWD 狀態
-                element.style.width = originalWidth;
-                element.style.maxWidth = originalMaxWidth;
-                element.style.height = originalHeight;
-            });
+            // 執行轉換
+            html2pdf().set(opt).from(element).save();
         }
     </script>
 </body>
