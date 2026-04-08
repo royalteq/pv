@@ -92,7 +92,6 @@
     </div>
 
     <script>
-        // 根據選擇的材料種類切換輸入框
         function toggleFields() {
             const type = document.getElementById('mat-type').value;
             const innerContainer = document.getElementById('inner-size-container');
@@ -112,7 +111,6 @@
             }
         }
 
-        // 計算邏輯（完全依照 Excel 內的公式）
         function calculate() {
             const typeSelect = document.getElementById('mat-type');
             const typeValue = typeSelect.value;
@@ -131,23 +129,19 @@
             let weight = 0;
             let finalLength = lengthInput;
             let lengthNote = "";
-            const constant = 0.785 * 0.00273; // Excel 中的常數 0.00214305
+            const constant = 0.785 * 0.00273; 
 
             switch(typeValue) {
                 case 'round_general':
-                    // (尺寸+0.2)^2 * 0.785 * 0.00273 * (長度/1000)
                     weight = Math.pow(size + 0.2, 2) * constant * (finalLength / 1000);
                     break;
                 case 'round_precision':
-                    // 尺寸^2 * 0.785 * 0.00273 * (長度/1000)
                     weight = Math.pow(size, 2) * constant * (finalLength / 1000);
                     break;
                 case 'tube':
-                    // ((外徑+0.2)^2 - 內徑^2) * 0.785 * 0.00273 * (長度/1000)
                     weight = (Math.pow(size + 0.2, 2) - Math.pow(innerSize, 2)) * constant * (finalLength / 1000);
                     break;
                 case 'short_cut':
-                    // 切短料自動加 5mm 損耗 (例如 122L -> 127)
                     finalLength = lengthInput + 5;
                     weight = Math.pow(size + 0.2, 2) * constant * (finalLength / 1000);
                     lengthNote = "(已含 5mm 切割損耗)";
@@ -156,7 +150,6 @@
 
             const totalPrice = weight * price;
 
-            // 寫入報價單欄位
             document.getElementById('out-date').innerText = new Date().toLocaleDateString('zh-TW');
             document.getElementById('out-type').innerText = typeText;
             document.getElementById('out-size').innerText = size;
@@ -172,25 +165,41 @@
             document.getElementById('out-length-note').innerText = lengthNote;
             document.getElementById('out-price').innerText = price;
             document.getElementById('out-weight').innerText = weight.toFixed(4) + " KG";
-            document.getElementById('out-total').innerText = Math.round(totalPrice).toLocaleString() + " 元"; // 總價四捨五入到整數
+            document.getElementById('out-total').innerText = Math.round(totalPrice).toLocaleString() + " 元"; 
 
-            // 顯示報價單區塊
             document.getElementById('quote-container').classList.remove('hidden');
         }
 
-        // 匯出 PDF 功能
+        // 升級版的 PDF 下載功能
         function downloadPDF() {
             const element = document.getElementById('pdf-content');
+            
+            // 1. 記錄目前的 CSS 狀態
+            const originalWidth = element.style.width;
+            const originalMaxWidth = element.style.maxWidth;
+            
+            // 2. 強制設定為固定像素寬度 (700px)，確保不被手機螢幕擠壓
+            element.style.width = '700px';
+            element.style.maxWidth = '700px';
+
             const opt = {
                 margin:       0.5,
                 filename:     `鋁材報價單_${new Date().getTime()}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
+                html2canvas:  { 
+                    scale: 2,           // 提高解析度
+                    scrollY: 0,         // 【關鍵修正】強制把 Y 軸歸零，避免往下捲動時截圖位移
+                    windowWidth: 800    // 【關鍵修正】給予虛擬視窗寬度
+                },
                 jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
             };
             
-            // 呼叫 html2pdf 進行轉換與下載
-            html2pdf().set(opt).from(element).save();
+            // 3. 開始產出 PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                // 4. PDF 存檔完成後，把寬度設定全部恢復，讓手機網頁恢復正常 RWD
+                element.style.width = originalWidth;
+                element.style.maxWidth = originalMaxWidth;
+            });
         }
     </script>
 </body>
