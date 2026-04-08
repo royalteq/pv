@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鋁材行動計算與報價系統</title>
+    <title>皇家鋁材行動計算系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -11,7 +11,7 @@
 
     <div class="max-w-lg mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         <div class="bg-blue-600 p-4 text-white text-center">
-            <h1 class="text-2xl font-bold">鋁材重量與報價計算機</h1>
+            <h1 class="text-2xl font-bold">皇家鋁材報價系統</h1>
             <p class="text-sm opacity-80 mt-1">支援一般、精抽、圓管與切短料</p>
         </div>
 
@@ -48,6 +48,11 @@
                 </div>
             </div>
 
+            <div id="cut-fee-container" class="hidden mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <label class="block text-sm font-bold text-blue-800 mb-1">單刀裁切代工費 (元)</label>
+                <input type="number" id="mat-cut-fee" class="w-full border border-blue-300 rounded-lg p-2 focus:ring-blue-500" value="1">
+            </div>
+
             <button onclick="calculate()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 mt-4">
                 計算數值
             </button>
@@ -60,7 +65,7 @@
         <div id="scroll-wrapper" class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200 mb-4">
             
             <div id="pdf-export-content" style="width: 700px; padding: 40px; background-color: #ffffff; font-family: 'Microsoft JhengHei', sans-serif; box-sizing: border-box;">
-                <h2 style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 5px; color: #000;">鋁材報價單</h2>
+                <h2 style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 5px; color: #000;">皇家鋁材報價單</h2>
                 <div style="text-align: right; margin-bottom: 15px; font-size: 14px; color: #333;">建立日期：<span id="pdf-date"></span></div>
 
                 <table style="width: 100%; border-collapse: collapse; font-size: 16px; color: #000; border: 2px solid #000;">
@@ -77,24 +82,34 @@
                         <td style="border: 1px solid #000; padding: 12px; text-align: center;"><span id="pdf-inner"></span> mm</td>
                     </tr>
                     <tr>
-                        <th style="border: 1px solid #000; padding: 12px; background-color: #f3f4f6; text-align: center; font-weight: bold;">需求長度</th>
+                        <th id="pdf-length-label" style="border: 1px solid #000; padding: 12px; background-color: #f3f4f6; text-align: center; font-weight: bold;">需求長度</th>
                         <td style="border: 1px solid #000; padding: 12px; text-align: center;"><span id="pdf-length"></span> mm <span id="pdf-length-note" style="color: #dc2626; font-size: 12px;"></span></td>
                     </tr>
                     <tr>
                         <th style="border: 1px solid #000; padding: 12px; background-color: #f3f4f6; text-align: center; font-weight: bold;">設定單價</th>
                         <td style="border: 1px solid #000; padding: 12px; text-align: center;"><span id="pdf-price"></span> 元 / KG</td>
                     </tr>
+                    
+                    <tr id="pdf-cut-fee-row" style="display: none;">
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #e0f2fe; text-align: center; font-weight: bold; color: #0369a1;">單刀代工費</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: center; font-weight: bold; color: #0369a1;"><span id="pdf-cut-fee"></span> 元</td>
+                    </tr>
+
                     <tr>
-                        <th style="border: 1px solid #000; padding: 12px; background-color: #e5e7eb; text-align: center; font-weight: bold;">預估重量</th>
+                        <th id="pdf-weight-label" style="border: 1px solid #000; padding: 12px; background-color: #e5e7eb; text-align: center; font-weight: bold;">預估重量</th>
                         <td style="border: 1px solid #000; padding: 12px; text-align: center; font-weight: bold; color: #1d4ed8;"><span id="pdf-weight"></span> KG</td>
                     </tr>
                     <tr>
-                        <th style="border: 1px solid #000; padding: 12px; background-color: #e5e7eb; text-align: center; font-weight: bold;">總計金額</th>
+                        <th id="pdf-total-label" style="border: 1px solid #000; padding: 12px; background-color: #e5e7eb; text-align: center; font-weight: bold;">總計金額</th>
                         <td style="border: 1px solid #000; padding: 12px; text-align: center; font-weight: bold; color: #dc2626; font-size: 20px;"><span id="pdf-total"></span> 元</td>
+                    </tr>
+
+                    <tr id="pdf-3m-row" style="display: none;">
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #fef08a; text-align: center; font-weight: bold; color: #854d0e;">3米標準材試算</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: center; font-weight: bold; color: #854d0e; font-size: 18px;"><span id="pdf-3m-info"></span></td>
                     </tr>
                 </table>
             </div>
-            
         </div>
 
         <button onclick="downloadPDF()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex justify-center items-center gap-2">
@@ -107,6 +122,7 @@
             const type = document.getElementById('mat-type').value;
             const innerContainer = document.getElementById('inner-size-container');
             const lengthLabel = document.getElementById('label-length');
+            const cutFeeContainer = document.getElementById('cut-fee-container');
             
             if (type === 'tube') {
                 innerContainer.classList.remove('hidden');
@@ -116,9 +132,11 @@
             }
 
             if (type === 'short_cut') {
-                lengthLabel.innerText = "切料長度 (mm) - 將自動+5";
+                lengthLabel.innerText = "單塊淨長度 (mm) - 系統將自動+5";
+                cutFeeContainer.classList.remove('hidden');
             } else {
                 lengthLabel.innerText = "長度 (mm)";
+                cutFeeContainer.classList.add('hidden');
             }
         }
 
@@ -131,9 +149,16 @@
             const innerSize = parseFloat(document.getElementById('mat-inner-size').value) || 0;
             const lengthInput = parseFloat(document.getElementById('mat-length').value) || 0;
             const price = parseFloat(document.getElementById('mat-price').value) || 0;
+            const cutFee = parseFloat(document.getElementById('mat-cut-fee').value) || 0;
 
             if (size === 0 || lengthInput === 0) {
                 alert('請輸入正確的尺寸與長度數值！');
+                return;
+            }
+
+            // 【防呆機制】：確保圓管的外徑一定大於內徑
+            if (typeValue === 'tube' && size <= innerSize) {
+                alert('防呆提示：圓管的「外徑」必須大於「內徑」，請重新輸入！');
                 return;
             }
 
@@ -159,9 +184,10 @@
                     break;
             }
 
-            const totalPrice = weight * price;
+            const pureMatPrice = weight * price;
+            let finalDisplayTotal = 0;
 
-            // 寫入 PDF 表格
+            // 基礎資料寫入
             document.getElementById('pdf-date').innerText = new Date().toLocaleDateString('zh-TW');
             document.getElementById('pdf-type').innerText = typeText;
             document.getElementById('pdf-size').innerText = size;
@@ -169,7 +195,6 @@
             document.getElementById('pdf-length-note').innerText = lengthNote;
             document.getElementById('pdf-price').innerText = price;
             document.getElementById('pdf-weight').innerText = weight.toFixed(4);
-            document.getElementById('pdf-total').innerText = Math.round(totalPrice).toLocaleString();
 
             if (typeValue === 'tube') {
                 document.getElementById('pdf-inner-row').style.display = 'table-row';
@@ -177,6 +202,35 @@
             } else {
                 document.getElementById('pdf-inner-row').style.display = 'none';
             }
+
+            // 針對「切短料」與「一般料」做不同的介面顯示
+            if (typeValue === 'short_cut') {
+                finalDisplayTotal = Math.round(pureMatPrice) + cutFee;
+                
+                const piecesPer3M = Math.floor(3000 / finalLength);
+                const total3MPrice = finalDisplayTotal * piecesPer3M;
+
+                document.getElementById('pdf-length-label').innerText = "單塊計算長度";
+                document.getElementById('pdf-weight-label').innerText = "單塊預估重量";
+                document.getElementById('pdf-total-label').innerText = "單塊總價 (材料+代工)";
+                
+                document.getElementById('pdf-cut-fee-row').style.display = 'table-row';
+                document.getElementById('pdf-cut-fee').innerText = cutFee;
+
+                document.getElementById('pdf-3m-row').style.display = 'table-row';
+                document.getElementById('pdf-3m-info').innerText = `可切 ${piecesPer3M} 塊，整支總報價 ${total3MPrice.toLocaleString()} 元`;
+            } else {
+                finalDisplayTotal = Math.round(pureMatPrice);
+                
+                document.getElementById('pdf-length-label').innerText = "需求長度";
+                document.getElementById('pdf-weight-label').innerText = "預估重量";
+                document.getElementById('pdf-total-label').innerText = "總計金額";
+
+                document.getElementById('pdf-cut-fee-row').style.display = 'none';
+                document.getElementById('pdf-3m-row').style.display = 'none';
+            }
+
+            document.getElementById('pdf-total').innerText = finalDisplayTotal.toLocaleString();
 
             // 顯示預覽區塊
             document.getElementById('quote-container').classList.remove('hidden');
@@ -196,13 +250,14 @@
             const wrapper = document.getElementById('scroll-wrapper');
             const element = document.getElementById('pdf-export-content');
             
-            // 【重要】在轉換 PDF 瞬間，暫時取消滾動屬性，防止截圖被腰斬
+            // 暫時取消滾動屬性，防止截圖被腰斬
             const originalOverflow = wrapper.style.overflowX;
             wrapper.style.overflowX = 'visible';
 
-            const fileName = `鋁材報價單_${getFormattedDateString()}.pdf`;
+            // 修改存檔名稱以符合新標題
+            const fileName = `皇家鋁材報價單_${getFormattedDateString()}.pdf`;
             const opt = {
-                margin:       [0.5, 0.5, 0.5, 0.5], // 上右下左邊界
+                margin:       [0.5, 0.5, 0.5, 0.5],
                 filename:     fileName,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { 
@@ -214,7 +269,6 @@
             };
             
             html2pdf().set(opt).from(element).save().then(() => {
-                // PDF 下載完成後，恢復滾動屬性
                 wrapper.style.overflowX = originalOverflow;
             });
         }
