@@ -26,7 +26,7 @@
                 </select>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">尺寸/外徑 (mm)</label>
                     <input type="number" id="mat-size" class="w-full border border-gray-300 rounded-lg p-3" placeholder="例如: 10">
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-1" id="label-length">長度 (mm)</label>
                     <input type="number" id="mat-length" class="w-full border border-gray-300 rounded-lg p-3" placeholder="例如: 1000">
@@ -49,8 +49,13 @@
             </div>
 
             <div id="cut-fee-container" class="hidden mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <label class="block text-sm font-bold text-blue-800 mb-1">單刀裁切代工費 (元)</label>
-                <input type="number" id="mat-cut-fee" class="w-full border border-blue-300 rounded-lg p-2 focus:ring-blue-500" value="1">
+                <label class="block text-sm font-bold text-blue-800 mb-1">單刀裁切代工費 (元) <span class="text-xs font-normal text-blue-600">支援小數點，如 1.5</span></label>
+                <input type="number" id="mat-cut-fee" step="0.1" class="w-full border border-blue-300 rounded-lg p-2 focus:ring-blue-500" value="1">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">報價備註 (選填)</label>
+                <textarea id="mat-remarks" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" rows="2" placeholder="可輸入交期、公差要求或特殊包裝註記..."></textarea>
             </div>
 
             <button onclick="calculate()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 mt-4">
@@ -108,6 +113,11 @@
                         <th style="border: 1px solid #000; padding: 12px; background-color: #fef08a; text-align: center; font-weight: bold; color: #854d0e;">3米標準材試算</th>
                         <td style="border: 1px solid #000; padding: 12px; text-align: center; font-weight: bold; color: #854d0e; font-size: 18px;"><span id="pdf-3m-info"></span></td>
                     </tr>
+
+                    <tr id="pdf-remarks-row" style="display: none;">
+                        <th style="border: 1px solid #000; padding: 12px; background-color: #f3f4f6; text-align: center; font-weight: bold;">備註說明</th>
+                        <td style="border: 1px solid #000; padding: 12px; text-align: left; color: #374151; white-space: pre-wrap;" id="pdf-remarks"></td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -150,13 +160,13 @@
             const lengthInput = parseFloat(document.getElementById('mat-length').value) || 0;
             const price = parseFloat(document.getElementById('mat-price').value) || 0;
             const cutFee = parseFloat(document.getElementById('mat-cut-fee').value) || 0;
+            const remarks = document.getElementById('mat-remarks').value.trim();
 
             if (size === 0 || lengthInput === 0) {
                 alert('請輸入正確的尺寸與長度數值！');
                 return;
             }
 
-            // 【防呆機制】：確保圓管的外徑一定大於內徑
             if (typeValue === 'tube' && size <= innerSize) {
                 alert('防呆提示：圓管的「外徑」必須大於「內徑」，請重新輸入！');
                 return;
@@ -185,9 +195,7 @@
             }
 
             const pureMatPrice = weight * price;
-            let finalDisplayTotal = 0;
 
-            // 基礎資料寫入
             document.getElementById('pdf-date').innerText = new Date().toLocaleDateString('zh-TW');
             document.getElementById('pdf-type').innerText = typeText;
             document.getElementById('pdf-size').innerText = size;
@@ -203,12 +211,20 @@
                 document.getElementById('pdf-inner-row').style.display = 'none';
             }
 
-            // 針對「切短料」與「一般料」做不同的介面顯示
             if (typeValue === 'short_cut') {
-                finalDisplayTotal = Math.round(pureMatPrice) + cutFee;
+                // 1. 先計算 (材料費 + 代工費)
+                const rawUnitTotal = pureMatPrice + cutFee;
                 
+                // 2. 四捨五入到小數第一位 (例如: 8.658 -> 8.7)
+                const roundedUnitTotal = Math.round(rawUnitTotal * 10) / 10;
+                
+                // 3. 隱藏的固定加給 0.1 元，並使用 toFixed 避免浮點數誤差 (變成 8.8)
+                const finalUnitTotal = parseFloat((roundedUnitTotal + 0.1).toFixed(1));
+                
+                // 3米整支試算
                 const piecesPer3M = Math.floor(3000 / finalLength);
-                const total3MPrice = finalDisplayTotal * piecesPer3M;
+                // 整支總報價維持四捨五入到整數
+                const total3MPrice = Math.round(finalUnitTotal * piecesPer3M);
 
                 document.getElementById('pdf-length-label').innerText = "單塊計算長度";
                 document.getElementById('pdf-weight-label').innerText = "單塊預估重量";
@@ -219,20 +235,28 @@
 
                 document.getElementById('pdf-3m-row').style.display = 'table-row';
                 document.getElementById('pdf-3m-info').innerText = `可切 ${piecesPer3M} 塊，整支總報價 ${total3MPrice.toLocaleString()} 元`;
-            } else {
-                finalDisplayTotal = Math.round(pureMatPrice);
                 
+                // 顯示單塊金額 (保留最多 1 位小數，精準顯示 8.8)
+                document.getElementById('pdf-total').innerText = finalUnitTotal.toLocaleString('zh-TW', {minimumFractionDigits: 0, maximumFractionDigits: 1});
+            } else {
                 document.getElementById('pdf-length-label').innerText = "需求長度";
                 document.getElementById('pdf-weight-label').innerText = "預估重量";
                 document.getElementById('pdf-total-label').innerText = "總計金額";
 
                 document.getElementById('pdf-cut-fee-row').style.display = 'none';
                 document.getElementById('pdf-3m-row').style.display = 'none';
+                
+                document.getElementById('pdf-total').innerText = Math.round(pureMatPrice).toLocaleString();
             }
 
-            document.getElementById('pdf-total').innerText = finalDisplayTotal.toLocaleString();
+            // 處理備註欄位顯示
+            if (remarks !== "") {
+                document.getElementById('pdf-remarks-row').style.display = 'table-row';
+                document.getElementById('pdf-remarks').innerText = remarks;
+            } else {
+                document.getElementById('pdf-remarks-row').style.display = 'none';
+            }
 
-            // 顯示預覽區塊
             document.getElementById('quote-container').classList.remove('hidden');
         }
 
@@ -250,11 +274,9 @@
             const wrapper = document.getElementById('scroll-wrapper');
             const element = document.getElementById('pdf-export-content');
             
-            // 暫時取消滾動屬性，防止截圖被腰斬
             const originalOverflow = wrapper.style.overflowX;
             wrapper.style.overflowX = 'visible';
 
-            // 修改存檔名稱以符合新標題
             const fileName = `皇家鋁材報價單_${getFormattedDateString()}.pdf`;
             const opt = {
                 margin:       [0.5, 0.5, 0.5, 0.5],
