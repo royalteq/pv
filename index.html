@@ -9,6 +9,33 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FoldGo 可折疊大容量旅行包",
+      "image": [
+        "https://royaltech.com.tw/images/foldway/holdway_2.JPG",
+        "https://royaltech.com.tw/images/foldway/holdway_3.jpg"
+      ],
+      "description": "亦沐 FoldGo 擁有 66 公分大容量與內建耐磨滾輪，摺疊時僅公事包大小，展開裝滿可像行李箱一樣輕鬆拖著走，完美取代笨重硬殼行李箱。",
+      "brand": {
+        "@type": "Brand",
+        "name": "亦沐生活選物"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.zeczec.com/projects/foldgo-66cm",
+        "priceCurrency": "TWD",
+        "availability": "https://schema.org/PreOrder",
+        "seller": {
+          "@type": "Organization",
+          "name": "皇家鋁材有限公司"
+        }
+      }
+    }
+    </script>
+
     <style>
         /* =========================================
            CSS 基礎設定與變數
@@ -346,6 +373,70 @@
         }
 
         /* =========================================
+           FAQ 手風琴折疊面板樣式 (修復衝突版)
+           ========================================= */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .faq-question {
+            padding: 22px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--primary-color);
+            transition: background-color 0.3s;
+            user-select: none;
+        }
+        
+        .faq-question:hover {
+            background-color: #faf9f8;
+        }
+        
+        .faq-icon {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
+            margin-left: 20px;
+        }
+        
+        /* 這裡將 active 改成 expanded 避免與滾動特效衝突 */
+        .faq-item.expanded .faq-icon {
+            transform: rotate(45deg); 
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 30px;
+            background-color: var(--white);
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .faq-item.expanded .faq-answer {
+            padding: 0 30px 25px; 
+        }
+
+        /* =========================================
            結語與底部區塊
            ========================================= */
         .upcoming {
@@ -508,8 +599,8 @@
                 padding: 70px 5%;
             }
             .bento-grid {
-                grid-template-columns: 1fr; 
-                gap: 25px;
+                grid-template-columns: 1fr !important; 
+                gap: 25px !important;
             }
             .bento-card:nth-child(n) {
                 grid-column: span 1; 
@@ -529,6 +620,18 @@
             }
             .bento-content p {
                 font-size: 0.95rem;
+            }
+            
+            .faq-question {
+                font-size: 1.05rem;
+                padding: 18px 20px;
+            }
+            .faq-answer {
+                padding: 0 20px;
+                font-size: 0.95rem;
+            }
+            .faq-item.expanded .faq-answer {
+                padding: 0 20px 20px;
             }
 
             .upcoming {
@@ -569,7 +672,7 @@
         <nav class="nav-links">
             <a href="#features">探索 FoldGo</a>
             <a href="#upcoming">選品預告</a>
-            <a href="https://www.zeczec.com/projects/foldgo-66cm" class="nav-btn">立即預購</a>
+            <a href="https://www.zeczec.com/projects/foldgo-66cm" class="nav-btn" target="_blank" rel="noopener">立即預購</a>
         </nav>
     </header>
 
@@ -581,7 +684,7 @@
             <div class="hero-content reveal">
                 <h1>捨棄笨重行李箱，<br>輕裝出遊這咖就夠。</h1>
                 <p><span class="pen-underline">亦沐 FoldGo 可折疊大容量旅行包，</span>擁有 66 公分魔術大空間，底部內建耐磨滾輪。裝滿戰利品後，也能優雅拖著走，徹底釋放您的雙手與肩膀。</p>
-                <a href="https://www.zeczec.com/projects/foldgo-66cm" class="btn btn-primary">看預購優惠</a>
+                <a href="https://www.zeczec.com/projects/foldgo-66cm" class="btn btn-primary" target="_blank" rel="noopener">看預購優惠</a>
             </div>
         </section>
 
@@ -637,7 +740,7 @@
                     </div>
                 </article>
                 
-                                <article class="bento-card reveal" style="transition-delay: 0.2s;">
+                <article class="bento-card reveal" style="transition-delay: 0.2s;">
                     <img src="https://royaltech.com.tw/images/foldway/holdway_detail.png" alt="加厚肩帶與雙拉鍊細節" loading="lazy">
                     <div class="bento-content">
                         <h3>升級減壓設計，好背又可舒緩肩膀重量</h3>
@@ -645,7 +748,6 @@
                     </div>
                 </article>
 
-                
                 <article class="bento-card reveal" style="transition-delay: 0.3s;">
                     <img src="https://royaltech.com.tw/images/foldway/holdway_spec.png" alt="產品功能" loading="lazy">
                     <div class="bento-content">
@@ -654,6 +756,63 @@
                     </div>
                 </article>
 
+            </div>
+        </section>
+
+        <section id="faq" class="features container reveal" style="padding-top: 60px; padding-bottom: 60px; background-color: var(--white);">
+            <div class="section-title reveal">
+                <h2>常見問題，為您的旅程解惑</h2>
+                <p>FREQUENTLY ASKED QUESTIONS</p>
+            </div>
+            
+            <div class="faq-list">
+                <div class="faq-item reveal">
+                    <div class="faq-question">
+                        FoldGo 旅行包的收納量，為何約當 24 吋行李箱？
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        FoldGo 的展開尺寸為 66 × 29 × 32 公分。<br>
+                        若以常見的行李箱（包）容積公式計算：<br>
+                        66 × 29 × 32 ÷ 1000 ≈ 61.2L<br><br>
+                        亦即 FoldGo 展開後的理論收納量約為 61.2 公升，而 24 吋行李箱的常見容量區間，通常約落在 50～65L 左右。因此，若從「可裝多少」這件事來看，FoldGo 展開後的收納量，確實落在 24 吋中型行李箱的容量範圍內。<br><br>
+                        另外，24 吋中型行李箱常被視為適合 3～5 天左右的旅行使用。因此，FoldGo 完全展開後，亦較適合 3 天內短程旅行。
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="transition-delay: 0.1s;">
+                    <div class="faq-question">
+                        折疊後的 FoldGo 只有公事包大小嗎？為何比較不佔空間？
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        FoldGo 展開尺寸約為 66 × 29 × 32 cm，折疊後約為 32 × 12 × 29 cm。<br>
+                        也就是說，需要使用時它可以展開成大容量旅行包；不需要使用時，則可折收成接近公事包大小的體積。<br><br>
+                        若以容積公式計算，FoldGo 展開時約為 61L，折疊後約為 11L。換句話說，折疊後的占用空間約只剩展開狀態的 18% 左右，因此平常收納時明顯更省空間。<br><br>
+                        相較之下，24 吋行李箱即使是空箱，也仍需保留完整箱體體積（常見外部尺寸大約落在 67 × 48 × 30 cm 或 68 × 45 × 32 cm 左右）。<br><br>
+                        因此，FoldGo 在使用時可提供約當 24 吋中型行李箱等級的收納量；但在不使用時，卻只佔接近公事包大小的收納空間，所以比 24 吋行李箱更不佔空間。
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="transition-delay: 0.2s;">
+                    <div class="faq-question">
+                        FoldGo 旅行包適合帶出國當備用包嗎？
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        非常適合！FoldGo 摺疊後僅有公事包大小，放進行李箱完全不佔空間。回程時展開即有 66 公分魔術大空間，底部內建耐磨滾輪，裝滿戰利品也能直接當作第二咖行李箱優雅拖行，完美解決出國買太多的煩惱。
+                    </div>
+                </div>
+
+                <div class="faq-item reveal" style="transition-delay: 0.3s;">
+                    <div class="faq-question">
+                        底部滾輪裝重物好拉嗎？會不會容易壞？
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        我們採用高強度的防刮耐磨滾輪設計，專為旅行負重打造。只要將包包傾斜，就能利用滾輪輕鬆拖行，大幅減輕肩膀負擔，實測滿載依然滑順好拉。
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -673,13 +832,13 @@
             </div>
             <h2>告別笨重，挑選你的專屬色系</h2>
             <p>經典黑 / 質感藍 / 森林綠・三色任選</p>
-            <a href="https://www.zeczec.com/projects/foldgo-66cm" class="nav-btn">立即前往預購</a>
+            <a href="https://www.zeczec.com/projects/foldgo-66cm" class="btn btn-primary btn-large" target="_blank" rel="noopener">立即前往預購</a>
         </section>
     </main>
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 亦沐生活選物 YIMU CURATION. All rights reserved.</p>
+            <p>&copy; 2026 亦沐生活選物. All rights reserved.</p>
             <div class="social-links">
                 <a href="#" target="_blank" rel="noopener">Instagram</a>
                 <a href="#" target="_blank" rel="noopener">Facebook</a>
@@ -690,6 +849,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- 滾動動畫 ---
             const reveals = document.querySelectorAll('.reveal');
             const revealOptions = {
                 threshold: 0.15,
@@ -711,10 +871,13 @@
                 revealOnScroll.observe(reveal);
             });
 
+            // --- 導覽列平滑滾動 ---
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
                     const targetId = this.getAttribute('href');
+                    if(targetId.startsWith('http')) return; 
+                    
+                    e.preventDefault();
                     if (targetId === '#') return;
                     
                     const targetElement = document.querySelector(targetId);
@@ -727,6 +890,31 @@
                              top: offsetPosition,
                              behavior: "smooth"
                         });
+                    }
+                });
+            });
+
+            // --- FAQ 手風琴折疊面板邏輯 (已修復類別衝突) ---
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                
+                question.addEventListener('click', () => {
+                    // 使用獨立的 expanded 類別，避免與 reveal 的 active 衝突
+                    const isExpanded = item.classList.contains('expanded');
+                    
+                    // 點擊時自動關閉其他已展開的面板
+                    faqItems.forEach(otherItem => {
+                        otherItem.classList.remove('expanded');
+                        otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                    });
+
+                    // 如果本來沒有展開，就展開它
+                    if (!isExpanded) {
+                        item.classList.add('expanded');
+                        // 加上 60px 的緩衝空間以防文字被裁切
+                        answer.style.maxHeight = answer.scrollHeight + 60 + "px";
                     }
                 });
             });
